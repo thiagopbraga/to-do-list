@@ -3,3 +3,26 @@
 body {
   margin: 0;
 }
+
+@keyframes trash-crumple {
+  0% {
+    opacity: 0.9;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+
+  55% {
+    opacity: 0.7;
+    transform: translate3d(0, 8px, 0) scale(0.64) rotate(-8deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.12) rotate(18deg);
+  }
+}
+
+.note-trash-crumple {
+  animation: trash-crumple 180ms ease-in forwards;
+  transform-origin: center;
+  will-change: opacity, transform;
+}

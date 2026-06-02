@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
+import { getNoteVisualDecay } from '../lib/decay'
 import { getNoteColorClasses, NOTE_COLOR_CLASSES } from '../lib/noteColors'
 import { NOTE_CARD_SIZE } from '../lib/geometry'
 import { NOTE_COLORS, type Note, type NoteColor } from '../types/board'
@@ -8,6 +9,7 @@ import { NOTE_COLORS, type Note, type NoteColor } from '../types/board'
 type NoteCardProps = {
   note: Note
   isEditing: boolean
+  isCrumpling?: boolean
   onEditStart: (id: string) => void
   onEditEnd: () => void
   onTextChange: (id: string, text: string) => void
@@ -26,6 +28,7 @@ const COLOR_LABELS = {
 export function NoteCard({
   note,
   isEditing,
+  isCrumpling = false,
   onEditStart,
   onEditEnd,
   onTextChange,
@@ -49,11 +52,12 @@ export function NoteCard({
   const dragTransform = transform
     ? CSS.Translate.toString(transform)
     : 'translate3d(0, 0, 0)'
+  const noteDecay = getNoteVisualDecay(note.updatedAt)
 
   return (
     <article
       ref={setNodeRef}
-      className={`absolute flex flex-col gap-2 rounded-sm p-3 shadow-md transition-shadow ${isDragging ? 'cursor-grabbing opacity-90' : 'cursor-grab'} ${getNoteColorClasses(note.color)}`}
+      className={`absolute flex flex-col gap-2 rounded-sm p-3 shadow-md transition-[left,top,box-shadow,filter] duration-200 ease-out ${isDragging ? 'cursor-grabbing opacity-90' : 'cursor-grab'} ${isCrumpling ? 'note-trash-crumple pointer-events-none' : ''} ${getNoteColorClasses(note.color)}`}
       style={{
         left: note.position.x,
         top: note.position.y,
@@ -61,7 +65,10 @@ export function NoteCard({
         width: NOTE_CARD_SIZE.width,
         height: NOTE_CARD_SIZE.height,
         transform: dragTransform,
+        filter: noteDecay.filter,
       }}
+      data-decay-stage={noteDecay.stage}
+      data-trash-crumpling={isCrumpling ? 'true' : 'false'}
       data-testid={`note-${note.id}`}
       aria-label="Post-it"
       onDoubleClick={(event) => event.stopPropagation()}
