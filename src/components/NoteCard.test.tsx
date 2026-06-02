@@ -2,6 +2,7 @@ import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createNoteFactory, resetNoteFactoryCounter } from '../test/factories'
+import { NOTE_DECAY_VISUALS } from '../lib/decay'
 import type { Note } from '../types/board'
 import { NoteCard } from './NoteCard'
 
@@ -150,6 +151,23 @@ describe('NoteCard', () => {
 
     expect(container.querySelector('[data-testid="note-note-card"]')).toHaveStyle({
       transform: 'translate3d(12px, -4px, 0)',
+    })
+  })
+
+  it('aplica envelhecimento visual derivado de updatedAt', () => {
+    renderNoteCard({
+      note: createNoteFactory({
+        id: 'old-note',
+        updatedAt: '2020-01-01T00:00:00.000Z',
+      }),
+    })
+
+    expect(container.querySelector('[data-testid="note-old-note"]')).toHaveAttribute(
+      'data-decay-stage',
+      'old',
+    )
+    expect(container.querySelector('[data-testid="note-old-note"]')).toHaveStyle({
+      filter: `saturate(${NOTE_DECAY_VISUALS.old.saturation})`,
     })
   })
 })
