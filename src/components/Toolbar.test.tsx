@@ -1,6 +1,7 @@
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { ALIGN_BOARD_EVENT } from '../lib/align'
 import { exportBoard } from '../lib/export'
 import { readImportFile } from '../lib/import'
 import {
@@ -140,6 +141,19 @@ describe('Toolbar', () => {
         notes: [note],
       }),
     )
+  })
+
+  it('emite evento de alinhamento ao clicar em Alinhar', async () => {
+    const container = await renderToolbar()
+    const alignListener = vi.fn()
+    window.addEventListener(ALIGN_BOARD_EVENT, alignListener)
+
+    await act(async () => {
+      getButton(container, 'Alinhar').click()
+    })
+
+    expect(alignListener).toHaveBeenCalledTimes(1)
+    window.removeEventListener(ALIGN_BOARD_EVENT, alignListener)
   })
 
   it('abre seletor de arquivo ao clicar em Importar', async () => {

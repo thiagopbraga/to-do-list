@@ -1,4 +1,11 @@
-import { useCallback, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from 'react'
 import {
   DndContext,
   KeyboardSensor,
@@ -8,23 +15,62 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { ALIGN_BOARD_EVENT, computeGrid } from '../lib/align'
 import {
   getCenteredClampedNotePosition,
   getDraggedNotePosition,
+  getElementSize,
 } from '../lib/geometry'
+import {
+  findGroupingTarget,
+  getDeckGroups,
+  groupNoteForDrop,
+  moveNoteForDrop,
+  removeNoteAndCollapseDecks,
+} from '../lib/grouping'
 import { useBoardStore } from '../store/boardStore'
-import type { NoteColor } from '../types/board'
+import type { NoteColor, Position } from '../types/board'
+import { Deck } from './Deck'
 import { NoteCard } from './NoteCard'
+import { Trash, TRASH_DROPPABLE_ID } from './Trash'
 
 const DRAG_ACTIVATION_DISTANCE = 5
+const TRASH_CRUMPLE_DURATION_MS = 180
+
+function hasSamePosition(a: Position, b: Position): boolean {
+  return a.x === b.x && a.y === b.y
+}
 
 export function Board() {
   const boardRef = useRef<HTMLElement | null>(null)
+  const removalTimeoutsRef = useRef(new Map<string, ReturnType<typeof setTimeout>>())
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null)
+  const [expandedGroupIds, setExpandedGroupIds] = useState<Set<string>>(
+    () => new Set(),
+  )
+  const [crumplingNoteIds, setCrumplingNoteIds] = useState<Set<string>>(
+    () => new Set(),
+  )
   const notes = useBoardStore((state) => state.notes)
   const addNote = useBoardStore((state) => state.addNote)
   const updateNote = useBoardStore((state) => state.updateNote)
+  const setNotes = useBoardStore((state) => state.setNotes)
   const bringToFront = useBoardStore((state) => state.bringToFront)
+  const deckGroups = useMemo(() => getDeckGroups(notes), [notes])
+  const deckGroupIds = useMemo(
+    () => new Set(deckGroups.map((deck) => deck.groupId)),
+    [deckGroups],
+  )
+  const visibleNotes = useMemo(
+    () =>
+      notes.filter(
+        (note) =>
+          !note.groupId ||
+          !deckGroupIds.has(note.groupId) ||
+          expandedGroupIds.has(note.groupId),
+      ),
+    [deckGroupIds, expandedGroupIds, notes],
+  )
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -32,6 +78,47 @@ export function Board() {
       },
     }),
     useSensor(KeyboardSensor),
+  )
+
+  useEffect(() => {
+    const removalTimeouts = removalTimeoutsRef.current
+
+    return () => {
+      removalTimeouts.forEach((timeoutId) => clearTimeout(timeoutId))
+      removalTimeouts.clear()
+    }
+  }, [])
+
+  const scheduleNoteRemoval = useCallback(
+    (noteId: string) => {
+      setCrumplingNoteIds((currentIds) => {
+        const nextIds = new Set(currentIds)
+        nextIds.add(noteId)
+        return nextIds
+      })
+
+      const previousTimeoutId = removalTimeoutsRef.current.get(noteId)
+      if (previousTimeoutId) clearTimeout(previousTimeoutId)
+
+      const timeoutId = setTimeout(() => {
+        setNotes(
+          removeNoteAndCollapseDecks(
+            useBoardStore.getState().notes,
+            noteId,
+            new Date().toISOString(),
+          ),
+        )
+        removalTimeoutsRef.current.delete(noteId)
+        setCrumplingNoteIds((currentIds) => {
+          const nextIds = new Set(currentIds)
+          nextIds.delete(noteId)
+          return nextIds
+        })
+      }, TRASH_CRUMPLE_DURATION_MS)
+
+      removalTimeoutsRef.current.set(noteId, timeoutId)
+    },
+    [setNotes],
   )
 
   const handleDoubleClick = useCallback(
@@ -66,11 +153,42 @@ export function Board() {
         .notes.find((candidate) => candidate.id === noteId)
       if (!note) return
 
-      updateNote(noteId, {
-        position: getDraggedNotePosition(note.position, event.delta, boardElement),
-      })
+      if (event.over?.id === TRASH_DROPPABLE_ID) {
+        scheduleNoteRemoval(noteId)
+        return
+      }
+
+      if (event.over?.id === noteId) return
+
+      const currentNotes = useBoardStore.getState().notes
+      const droppedPosition = getDraggedNotePosition(
+        note.position,
+        event.delta,
+        boardElement,
+      )
+      const groupingTarget = findGroupingTarget(
+        currentNotes,
+        noteId,
+        droppedPosition,
+      )
+      const timestamp = new Date().toISOString()
+
+      if (groupingTarget) {
+        setNotes(
+          groupNoteForDrop(
+            currentNotes,
+            noteId,
+            groupingTarget.id,
+            droppedPosition,
+            timestamp,
+          ),
+        )
+        return
+      }
+
+      setNotes(moveNoteForDrop(currentNotes, noteId, droppedPosition, timestamp))
     },
-    [updateNote],
+    [scheduleNoteRemoval, setNotes],
   )
 
   const handleTextChange = useCallback(
@@ -87,9 +205,80 @@ export function Board() {
     [updateNote],
   )
 
+  const handleAlignBoard = useCallback(() => {
+    const boardElement = boardRef.current
+    if (!boardElement || notes.length === 0) return
+
+    const collapsedDecks = deckGroups.filter(
+      (deck) => !expandedGroupIds.has(deck.groupId),
+    )
+    const collapsedGroupIds = new Set(
+      collapsedDecks.map((deck) => deck.groupId),
+    )
+    const collapsedCoverIds = new Set(
+      collapsedDecks.map((deck) => deck.coverNote.id),
+    )
+    const alignableNotes = notes.filter((note) => {
+      if (!note.groupId || !collapsedGroupIds.has(note.groupId)) return true
+
+      return collapsedCoverIds.has(note.id)
+    })
+
+    if (alignableNotes.length === 0) return
+
+    const gridPositions = computeGrid(alignableNotes, getElementSize(boardElement))
+    const deckPositions = new Map<string, Position>()
+    for (const deck of collapsedDecks) {
+      const position = gridPositions[deck.coverNote.id]
+      if (position) deckPositions.set(deck.groupId, position)
+    }
+
+    const timestamp = new Date().toISOString()
+    let hasPositionChanges = false
+    const alignedNotes = notes.map((note) => {
+      const position =
+        note.groupId && collapsedGroupIds.has(note.groupId)
+          ? deckPositions.get(note.groupId)
+          : gridPositions[note.id]
+
+      if (!position || hasSamePosition(note.position, position)) return note
+
+      hasPositionChanges = true
+      return {
+        ...note,
+        position,
+        updatedAt: timestamp,
+      }
+    })
+
+    if (hasPositionChanges) setNotes(alignedNotes)
+  }, [deckGroups, expandedGroupIds, notes, setNotes])
+
   const handleEditEnd = useCallback(() => {
     setEditingNoteId(null)
   }, [])
+
+  const handleDeckToggle = useCallback((groupId: string) => {
+    setExpandedGroupIds((currentIds) => {
+      const nextIds = new Set(currentIds)
+
+      if (nextIds.has(groupId)) {
+        nextIds.delete(groupId)
+      } else {
+        nextIds.add(groupId)
+      }
+
+      return nextIds
+    })
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener(ALIGN_BOARD_EVENT, handleAlignBoard)
+
+    return () => {
+      window.removeEventListener(ALIGN_BOARD_EVENT, handleAlignBoard)
+    }
+  }, [handleAlignBoard])
 
   return (
     <DndContext
@@ -104,7 +293,16 @@ export function Board() {
         aria-label="Quadro de post-its"
         onDoubleClick={handleDoubleClick}
       >
-        {notes.map((note) => (
+        {deckGroups.map((deck) => (
+          <Deck
+            key={deck.groupId}
+            groupId={deck.groupId}
+            notes={deck.notes}
+            isExpanded={expandedGroupIds.has(deck.groupId)}
+            onToggle={handleDeckToggle}
+          />
+        ))}
+        {visibleNotes.map((note) => (
           <NoteCard
             key={note.id}
             note={note}
@@ -113,8 +311,10 @@ export function Board() {
             onEditEnd={handleEditEnd}
             onTextChange={handleTextChange}
             onColorChange={handleColorChange}
+            isCrumpling={crumplingNoteIds.has(note.id)}
           />
         ))}
+        <Trash />
       </main>
     </DndContext>
   )

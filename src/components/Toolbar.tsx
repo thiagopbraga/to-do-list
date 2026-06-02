@@ -1,4 +1,5 @@
 import { useRef, useState, type ChangeEvent } from 'react'
+import { ALIGN_BOARD_EVENT } from '../lib/align'
 import { exportBoard } from '../lib/export'
 import { parseImport, readImportFile } from '../lib/import'
 import { useBoardStore } from '../store/boardStore'
@@ -16,6 +17,10 @@ export function Toolbar() {
 
   function handleExport() {
     exportBoard(useBoardStore.getState())
+  }
+
+  function handleAlign() {
+    window.dispatchEvent(new Event(ALIGN_BOARD_EVENT))
   }
 
   function handleImportClick() {
@@ -64,6 +69,13 @@ export function Toolbar() {
       aria-label="Barra de ferramentas"
     >
       <span className="text-sm font-semibold text-stone-700">StickyFlow</span>
+      <button
+        type="button"
+        className="rounded-md border border-stone-300 bg-white px-3 py-1 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-500"
+        onClick={handleAlign}
+      >
+        Alinhar
+      </button>
       <button
         type="button"
         className="rounded-md border border-stone-300 bg-white px-3 py-1 text-sm font-medium text-stone-700 shadow-sm transition hover:bg-stone-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-500"
