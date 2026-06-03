@@ -34,13 +34,14 @@ diferenciadas (🔮) ficam para depois do MVP.
 | 2 | [Criação Rápida](spec-criacao-rapida/criacao-rapida.md) | MVP | `CRI` | FND |
 | 3 | [Edição Direta](spec-edicao-direta/edicao-direta.md) | MVP | `EDI` | FND |
 | 4 | [Drag and Drop](spec-drag-and-drop/drag-and-drop.md) | MVP | `DND` | FND, PER |
-| 5 | [Categorização Visual (Cor)](spec-categorizacao-visual/categorizacao-visual.md) | MVP | `COR` | FND |
-| 6 | [Exportação de Dados](spec-exportacao-dados/exportacao-dados.md) | MVP | `EXP` | FND |
-| 7 | [Importação de Dados](spec-importacao-dados/importacao-dados.md) | MVP | `IMP` | FND, PER |
-| 8 | [Envelhecimento Visual (Decay)](spec-envelhecimento-visual/envelhecimento-visual.md) | 🔮 Futuro | `DEC` | FND, EDI, DND |
-| 9 | [Lixeira Tátil](spec-lixeira-tatil/lixeira-tatil.md) | 🔮 Futuro | `LIX` | DND, FND |
-| 10 | [Empilhamento (Grouping)](spec-empilhamento/empilhamento.md) | 🔮 Futuro | `GRP` | DND, FND |
-| 11 | [Alinhamento Magnético](spec-alinhamento-magnetico/alinhamento-magnetico.md) | 🔮 Futuro | `MAG` | FND, PER |
+| 5 | [Seleção Múltipla](spec-selecao-multipla/selecao-multipla.md) | MVP | `SEL` | FND, EDI, DND |
+| 6 | [Categorização Visual (Cor)](spec-categorizacao-visual/categorizacao-visual.md) | MVP | `COR` | FND |
+| 7 | [Exportação de Dados](spec-exportacao-dados/exportacao-dados.md) | MVP | `EXP` | FND |
+| 8 | [Importação de Dados](spec-importacao-dados/importacao-dados.md) | MVP | `IMP` | FND, PER |
+| 9 | [Envelhecimento Visual (Decay)](spec-envelhecimento-visual/envelhecimento-visual.md) | 🔮 Futuro | `DEC` | FND, EDI, DND |
+| 10 | [Lixeira Tátil](spec-lixeira-tatil/lixeira-tatil.md) | 🔮 Futuro | `LIX` | DND, FND |
+| 11 | [Empilhamento (Grouping)](spec-empilhamento/empilhamento.md) | 🔮 Futuro | `GRP` | DND, FND |
+| 12 | [Alinhamento Magnético](spec-alinhamento-magnetico/alinhamento-magnetico.md) | 🔮 Futuro | `MAG` | FND, PER |
 | T | [Testes Gerais](spec-testes-gerais/testes-gerais.md) | MVP · transversal | `TST` | FND (+ features) |
 
 ## Legenda de status
@@ -56,3 +57,4 @@ diferenciadas (🔮) ficam para depois do MVP.
 - **Travamento em colunas Kanban** mencionado no PRD §3 → fora do MVP (ideia futura).
 - **Texto puro / anti-XSS** — RFC §7, aplicado em [EDI](spec-edicao-direta/edicao-direta.md) e [IMP](spec-importacao-dados/importacao-dados.md).
 - **Stack de testes** — Vitest + React Testing Library (unitário/componente) e Playwright (E2E); detalhes em [Testes Gerais](spec-testes-gerais/testes-gerais.md).
+- **Seleção múltipla não persistida** — seleção é estado transitório de UI, documentado em [SEL](spec-selecao-multipla/selecao-multipla.md).
