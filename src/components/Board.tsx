@@ -51,6 +51,9 @@ export function Board() {
   const [crumplingNoteIds, setCrumplingNoteIds] = useState<Set<string>>(
     () => new Set(),
   )
+  const [selectedNoteIds, setSelectedNoteIds] = useState<Set<string>>(
+    () => new Set(),
+  )
   const notes = useBoardStore((state) => state.notes)
   const addNote = useBoardStore((state) => state.addNote)
   const updateNote = useBoardStore((state) => state.updateNote)
@@ -108,6 +111,13 @@ export function Board() {
             new Date().toISOString(),
           ),
         )
+        setSelectedNoteIds((currentIds) => {
+          if (!currentIds.has(noteId)) return currentIds
+
+          const nextIds = new Set(currentIds)
+          nextIds.delete(noteId)
+          return nextIds
+        })
         removalTimeoutsRef.current.delete(noteId)
         setCrumplingNoteIds((currentIds) => {
           const nextIds = new Set(currentIds)
@@ -130,6 +140,7 @@ export function Board() {
       })
 
       setEditingNoteId(note.id)
+      setSelectedNoteIds(new Set([note.id]))
     },
     [addNote],
   )
@@ -137,6 +148,9 @@ export function Board() {
   const handleDragStart = useCallback(
     (event: DragStartEvent) => {
       const noteId = String(event.active.id)
+      setSelectedNoteIds((currentIds) =>
+        currentIds.has(noteId) ? currentIds : new Set([noteId]),
+      )
       bringToFront(noteId)
     },
     [bringToFront],
@@ -203,6 +217,26 @@ export function Board() {
       updateNote(id, { color })
     },
     [updateNote],
+  )
+
+  const handleNoteSelect = useCallback(
+    (id: string, mode: 'single' | 'toggle') => {
+      setSelectedNoteIds((currentIds) => {
+        if (mode === 'single') return new Set([id])
+
+        const nextIds = new Set(currentIds)
+        if (nextIds.has(id)) {
+          nextIds.delete(id)
+        } else {
+          nextIds.add(id)
+        }
+
+        return nextIds
+      })
+
+      if (mode === 'toggle') setEditingNoteId(null)
+    },
+    [],
   )
 
   const handleAlignBoard = useCallback(() => {
@@ -307,8 +341,10 @@ export function Board() {
             key={note.id}
             note={note}
             isEditing={editingNoteId === note.id}
+            isSelected={selectedNoteIds.has(note.id)}
             onEditStart={setEditingNoteId}
             onEditEnd={handleEditEnd}
+            onSelect={handleNoteSelect}
             onTextChange={handleTextChange}
             onColorChange={handleColorChange}
             isCrumpling={crumplingNoteIds.has(note.id)}

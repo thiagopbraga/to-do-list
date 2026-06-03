@@ -7,6 +7,7 @@ import type { Note } from '../types/board'
 import { NoteCard } from './NoteCard'
 
 const dndKitMock = vi.hoisted(() => ({
+  listenerKeyDown: vi.fn(),
   setNodeRef: vi.fn(),
   useDraggable: vi.fn(),
 }))
@@ -33,8 +34,10 @@ function renderNoteCard({ note, isEditing = false }: RenderOptions = {}) {
   const props = {
     note: note ?? createNoteFactory({ id: 'note-card' }),
     isEditing,
+    isSelected: false,
     onEditStart: vi.fn(),
     onEditEnd: vi.fn(),
+    onSelect: vi.fn(),
     onTextChange: vi.fn(),
     onColorChange: vi.fn(),
   }
@@ -62,10 +65,11 @@ describe('NoteCard', () => {
     container = document.createElement('div')
     document.body.appendChild(container)
     root = createRoot(container)
+    dndKitMock.listenerKeyDown.mockReset()
     dndKitMock.setNodeRef.mockReset()
     dndKitMock.useDraggable.mockReturnValue({
       attributes: { role: 'button' },
-      listeners: {},
+      listeners: { onKeyDown: dndKitMock.listenerKeyDown },
       setNodeRef: dndKitMock.setNodeRef,
       transform: { x: 12, y: -4, scaleX: 1, scaleY: 1 },
       isDragging: false,
@@ -106,7 +110,24 @@ describe('NoteCard', () => {
       editButton?.click()
     })
 
+    expect(props.onSelect).toHaveBeenCalledWith('note-card', 'single')
     expect(props.onEditStart).toHaveBeenCalledWith('note-card')
+  })
+
+  it('alterna seleção múltipla com modificador sem entrar em edição', () => {
+    const { props } = renderNoteCard()
+    const editButton = container.querySelector<HTMLButtonElement>(
+      '[aria-label="Editar nota"]',
+    )
+
+    act(() => {
+      editButton?.dispatchEvent(
+        new MouseEvent('click', { bubbles: true, ctrlKey: true }),
+      )
+    })
+
+    expect(props.onSelect).toHaveBeenCalledWith('note-card', 'toggle')
+    expect(props.onEditStart).not.toHaveBeenCalled()
   })
 
   it('vincula o textarea aos callbacks de edição', () => {
@@ -126,6 +147,25 @@ describe('NoteCard', () => {
 
     expect(props.onTextChange).toHaveBeenCalledWith('note-card', 'Texto editado')
     expect(props.onEditEnd).toHaveBeenCalled()
+  })
+
+  it('não deixa teclas do textarea acionarem listeners do drag', () => {
+    renderNoteCard({ isEditing: true })
+    const textarea = container.querySelector<HTMLTextAreaElement>(
+      '[aria-label="Editar texto da nota"]',
+    )
+    const spaceEvent = new KeyboardEvent('keydown', {
+      key: ' ',
+      bubbles: true,
+      cancelable: true,
+    })
+
+    act(() => {
+      textarea?.dispatchEvent(spaceEvent)
+    })
+
+    expect(spaceEvent.defaultPrevented).toBe(false)
+    expect(dndKitMock.listenerKeyDown).not.toHaveBeenCalled()
   })
 
   it('exibe a paleta e troca a cor escolhida', () => {
@@ -152,6 +192,32 @@ describe('NoteCard', () => {
     expect(container.querySelector('[data-testid="note-note-card"]')).toHaveStyle({
       transform: 'translate3d(12px, -4px, 0)',
     })
+  })
+
+  it('expõe estado selecionado no card', () => {
+    const props = {
+      note: createNoteFactory({ id: 'selected-note' }),
+      isEditing: false,
+      isSelected: true,
+      onEditStart: vi.fn(),
+      onEditEnd: vi.fn(),
+      onSelect: vi.fn(),
+      onTextChange: vi.fn(),
+      onColorChange: vi.fn(),
+    }
+
+    act(() => {
+      root.render(<NoteCard {...props} />)
+    })
+
+    expect(container.querySelector('[data-testid="note-selected-note"]')).toHaveAttribute(
+      'data-selected',
+      'true',
+    )
+    expect(container.querySelector('[aria-label="Editar nota"]')).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
   })
 
   it('aplica envelhecimento visual derivado de updatedAt', () => {

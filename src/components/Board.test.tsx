@@ -212,6 +212,10 @@ describe('Board', () => {
     expect(
       queryElement('[aria-label="Editar texto da nota"]'),
     ).toHaveFocus()
+    expect(queryElement('[data-testid^="note-"]')).toHaveAttribute(
+      'data-selected',
+      'true',
+    )
   })
 
   it('não cria outra nota ao dar duplo clique sobre nota existente', () => {
@@ -706,6 +710,39 @@ describe('Board', () => {
     expect(
       queryElement('[aria-label="Editar texto da nota"]'),
     ).toHaveFocus()
+    expect(queryElement('[data-testid="note-click-note"]')).toHaveAttribute(
+      'data-selected',
+      'true',
+    )
     expect(useBoardStore.getState().notes[0].position).toEqual({ x: 20, y: 30 })
+  })
+
+  it('permite selecionar múltiplas notas com modificador sem editar a segunda', () => {
+    useBoardStore.getState().setNotes([
+      createNoteFactory({ id: 'first', text: 'Primeira' }),
+      createNoteFactory({ id: 'second', text: 'Segunda' }),
+    ])
+    renderBoard()
+
+    act(() => {
+      queryElement<HTMLButtonElement>(
+        '[data-testid="note-first"] [aria-label="Editar nota"]',
+      ).click()
+    })
+    act(() => {
+      queryElement<HTMLButtonElement>(
+        '[data-testid="note-second"] [aria-label="Editar nota"]',
+      ).dispatchEvent(new MouseEvent('click', { bubbles: true, ctrlKey: true }))
+    })
+
+    expect(queryElement('[data-testid="note-first"]')).toHaveAttribute(
+      'data-selected',
+      'true',
+    )
+    expect(queryElement('[data-testid="note-second"]')).toHaveAttribute(
+      'data-selected',
+      'true',
+    )
+    expect(container.querySelector('[aria-label="Editar texto da nota"]')).toBeNull()
   })
 })
