@@ -1,179 +1,148 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createNoteFactory, resetNoteFactoryCounter } from '../test/factories'
-import { installLocalStorageMock } from '../test/localStorageMock'
-import { resetBoardStore, useBoardStore } from '../store/boardStore'
-import { SCHEMA_VERSION, type BoardState } from '../types/board'
+import { resetTaskStore, useTaskStore } from '../store/taskStore'
+import { createAppStateFactory, createTaskFactory } from '../test/factories'
+import { createLocalStorageMock } from '../test/localStorageMock'
+import { INBOX_LIST_ID } from '../types/task'
 import {
   AUTOSAVE_DELAY_MS,
-  STORAGE_KEY,
-  initializeBoardPersistence,
-  isLocalStorageAvailable,
+  initializePersistence,
+  LEGACY_STORAGE_KEY,
   loadState,
+  migrateLegacyState,
   parseState,
   saveState,
   serializeState,
-  type BoardPersistenceController,
+  STORAGE_KEY,
+  type PersistenceController,
 } from './storage'
 
-const FIXED_TIME = new Date('2026-06-02T14:30:00.000Z')
+beforeEach(() => {
+  resetTaskStore()
+})
 
-function createBoardState(overrides: Partial<BoardState> = {}): BoardState {
-  return {
-    version: SCHEMA_VERSION,
-    board: {
-      lastModified: '2026-06-02T12:00:00.000Z',
-      theme: 'light',
-    },
-    notes: [createNoteFactory({ id: 'persisted-note' })],
-    ...overrides,
-  }
-}
-
-describe('storage', () => {
-  let persistence: BoardPersistenceController | null = null
-
-  beforeEach(() => {
-    vi.useFakeTimers()
-    vi.setSystemTime(FIXED_TIME)
-    vi.spyOn(console, 'warn').mockImplementation(() => undefined)
-    resetNoteFactoryCounter()
-    installLocalStorageMock()
-    resetBoardStore()
+describe('parseState', () => {
+  it('aceita estado válido', () => {
+    const state = createAppStateFactory({ tasks: [createTaskFactory()] })
+    expect(parseState(serializeState(state))).toEqual(state)
   })
+
+  it('rejeita JSON inválido e schema desconhecido', () => {
+    expect(parseState('{nope')).toBeNull()
+    expect(parseState('{"version":"9.9"}')).toBeNull()
+  })
+
+  it('rejeita tarefa apontando para lista inexistente', () => {
+    const state = createAppStateFactory({
+      tasks: [createTaskFactory({ listId: 'nao-existe' })],
+    })
+    expect(parseState(serializeState(state))).toBeNull()
+  })
+
+  it('rejeita estado sem a lista Entrada', () => {
+    const state = createAppStateFactory({ lists: [] })
+    expect(parseState(serializeState(state))).toBeNull()
+  })
+
+  it('rejeita datas e horas malformadas', () => {
+    const badDate = createAppStateFactory({
+      tasks: [createTaskFactory({ dueDate: '09/07/2026' })],
+    })
+    const badTime = createAppStateFactory({
+      tasks: [createTaskFactory({ dueDate: '2026-07-09', dueTime: '25:00' })],
+    })
+    expect(parseState(serializeState(badDate))).toBeNull()
+    expect(parseState(serializeState(badTime))).toBeNull()
+  })
+})
+
+describe('saveState / loadState', () => {
+  it('faz roundtrip por um storage', () => {
+    const storage = createLocalStorageMock()
+    const state = createAppStateFactory({ tasks: [createTaskFactory()] })
+    expect(saveState(state, storage)).toEqual({ ok: true })
+    expect(loadState(storage)).toEqual(state)
+  })
+
+  it('retorna erro quando storage está indisponível', () => {
+    const result = saveState(createAppStateFactory(), null)
+    expect(result.ok).toBe(false)
+  })
+
+  it('migra estado legado do StickyFlow para tarefas na Entrada', () => {
+    const storage = createLocalStorageMock()
+    storage.setItem(
+      LEGACY_STORAGE_KEY,
+      JSON.stringify({
+        version: '1.0',
+        board: { lastModified: 'x', theme: 'light' },
+        notes: [
+          { text: 'Comprar pão\nintegral, 2 unidades' },
+          { text: '   ' },
+        ],
+      }),
+    )
+
+    const state = loadState(storage)
+    expect(state).not.toBeNull()
+    expect(state?.tasks).toHaveLength(1)
+    expect(state?.tasks[0].title).toBe('Comprar pão')
+    expect(state?.tasks[0].notes).toBe('integral, 2 unidades')
+    expect(state?.tasks[0].listId).toBe(INBOX_LIST_ID)
+  })
+
+  it('prefere o estado novo ao legado', () => {
+    const storage = createLocalStorageMock()
+    const state = createAppStateFactory({
+      tasks: [createTaskFactory({ title: 'Nova era' })],
+    })
+    storage.setItem(STORAGE_KEY, serializeState(state))
+    storage.setItem(LEGACY_STORAGE_KEY, JSON.stringify({ notes: [{ text: 'velha' }] }))
+    expect(loadState(storage)?.tasks[0].title).toBe('Nova era')
+  })
+})
+
+describe('migrateLegacyState', () => {
+  it('retorna vazio para payload inválido', () => {
+    expect(migrateLegacyState('{oops')).toEqual([])
+    expect(migrateLegacyState('{"notes":"nada"}')).toEqual([])
+  })
+})
+
+describe('initializePersistence', () => {
+  let controller: PersistenceController | null = null
 
   afterEach(() => {
-    persistence?.dispose()
-    persistence = null
-    resetBoardStore()
+    controller?.dispose()
+    controller = null
     vi.useRealTimers()
-    vi.unstubAllGlobals()
-    vi.restoreAllMocks()
   })
 
-  it('saveState/loadState fazem round-trip fiel do BoardState', () => {
-    const state = createBoardState()
-
-    const result = saveState(state)
-
-    expect(result).toEqual({ ok: true })
-    expect(localStorage.getItem(STORAGE_KEY)).toBe(serializeState(state))
-    expect(loadState()).toEqual(state)
-  })
-
-  it('loadState retorna null para JSON corrompido sem lançar', () => {
-    localStorage.setItem(STORAGE_KEY, '{')
-
-    expect(() => loadState()).not.toThrow()
-    expect(loadState()).toBeNull()
-    expect(console.warn).toHaveBeenCalled()
-  })
-
-  it('parseState rejeita payload incompatível com schema v1.0', () => {
-    const incompatible = JSON.stringify({
-      version: '0.9',
-      board: { lastModified: '2026-06-02T12:00:00.000Z', theme: 'light' },
-      notes: [],
+  it('hidrata o store a partir do storage e salva com debounce', () => {
+    vi.useFakeTimers()
+    const storage = createLocalStorageMock()
+    const saved = createAppStateFactory({
+      tasks: [createTaskFactory({ title: 'Persistida' })],
     })
+    storage.setItem(STORAGE_KEY, serializeState(saved))
 
-    expect(parseState(incompatible)).toBeNull()
+    controller = initializePersistence({ storage })
+    expect(useTaskStore.getState().tasks[0]?.title).toBe('Persistida')
+
+    useTaskStore.getState().addTask({ title: 'Nova' })
+    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS + 10)
+
+    const persisted = parseState(storage.getItem(STORAGE_KEY) ?? '')
+    expect(persisted?.tasks.map((t) => t.title)).toContain('Nova')
   })
 
-  it('saveState trata QuotaExceededError sem quebrar', () => {
-    const quotaError = new DOMException('Sem espaço', 'QuotaExceededError')
-    const storage = {
-      getItem: vi.fn(),
-      removeItem: vi.fn(),
-      setItem: vi.fn(() => {
-        throw quotaError
-      }),
-    }
+  it('flush força a gravação pendente', () => {
+    vi.useFakeTimers()
+    const storage = createLocalStorageMock()
+    controller = initializePersistence({ storage })
 
-    const result = saveState(createBoardState(), storage)
-
-    expect(result).toMatchObject({ ok: false, reason: 'quota-exceeded' })
-    expect(console.warn).toHaveBeenCalled()
-  })
-
-  it('localStorage indisponível mantém app em memória sem erro', () => {
-    const blockedStorage = {
-      getItem: vi.fn(() => {
-        throw new Error('bloqueado')
-      }),
-      removeItem: vi.fn(),
-      setItem: vi.fn(() => {
-        throw new Error('bloqueado')
-      }),
-    }
-
-    expect(isLocalStorageAvailable(blockedStorage)).toBe(false)
-    expect(loadState(blockedStorage)).toBeNull()
-    expect(saveState(createBoardState(), null)).toMatchObject({
-      ok: false,
-      reason: 'storage-unavailable',
-    })
-    expect(() => {
-      persistence = initializeBoardPersistence({ storage: blockedStorage })
-      useBoardStore.getState().setNotes([createNoteFactory({ id: 'memory-only' })])
-    }).not.toThrow()
-  })
-
-  it('auto-save usa debounce e agrupa mudanças sequenciais em uma gravação', () => {
-    const setItemSpy = vi.spyOn(localStorage, 'setItem')
-    persistence = initializeBoardPersistence({ debounceMs: AUTOSAVE_DELAY_MS })
-
-    useBoardStore.getState().setNotes([createNoteFactory({ id: 'a' })])
-    useBoardStore.getState().setNotes([
-      createNoteFactory({ id: 'a' }),
-      createNoteFactory({ id: 'b' }),
-    ])
-
-    expect(setItemSpy).not.toHaveBeenCalled()
-
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS - 1)
-    expect(setItemSpy).not.toHaveBeenCalled()
-
-    vi.advanceTimersByTime(1)
-
-    expect(setItemSpy).toHaveBeenCalledTimes(1)
-    expect(loadState()?.notes.map((note) => note.id)).toEqual(['a', 'b'])
-  })
-
-  it('flush persiste imediatamente a última alteração pendente', () => {
-    const setItemSpy = vi.spyOn(localStorage, 'setItem')
-    persistence = initializeBoardPersistence({ debounceMs: AUTOSAVE_DELAY_MS })
-
-    useBoardStore.getState().setNotes([createNoteFactory({ id: 'flush-me' })])
-
-    expect(persistence.flush()).toEqual({ ok: true })
-    expect(setItemSpy).toHaveBeenCalledTimes(1)
-
-    vi.advanceTimersByTime(AUTOSAVE_DELAY_MS)
-    expect(setItemSpy).toHaveBeenCalledTimes(1)
-  })
-
-  it('hidrata o store com dado salvo válido no bootstrap', () => {
-    const savedState = createBoardState({
-      board: {
-        lastModified: '2026-06-01T10:00:00.000Z',
-        theme: 'dark',
-      },
-      notes: [createNoteFactory({ id: 'hydrated', text: 'Restaurada' })],
-    })
-    localStorage.setItem(STORAGE_KEY, serializeState(savedState))
-
-    persistence = initializeBoardPersistence()
-
-    const state = useBoardStore.getState()
-    expect(state.board).toEqual(savedState.board)
-    expect(state.notes).toEqual(savedState.notes)
-  })
-
-  it('sem dado salvo mantém o board inicial vazio', () => {
-    persistence = initializeBoardPersistence()
-
-    const state = useBoardStore.getState()
-    expect(state.version).toBe(SCHEMA_VERSION)
-    expect(state.board.theme).toBe('light')
-    expect(state.notes).toEqual([])
+    useTaskStore.getState().addTask({ title: 'Imediata' })
+    expect(controller.flush()).toEqual({ ok: true })
+    const persisted = parseState(storage.getItem(STORAGE_KEY) ?? '')
+    expect(persisted?.tasks[0]?.title).toBe('Imediata')
   })
 })

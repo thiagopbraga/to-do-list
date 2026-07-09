@@ -17,25 +17,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
-
-      - name: Enable Corepack
-        run: corepack enable
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: npm ci
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
 
       - name: Unit and coverage
-        run: yarn coverage
+        run: npm run coverage
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Install Playwright browsers
-        run: yarn playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium
 
       - name: E2E
-        run: yarn test:e2e
+        run: npm run test:e2e
