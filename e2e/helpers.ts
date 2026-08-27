@@ -1,156 +1,35 @@
-import { expect, type Locator, type Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 
-const STORAGE_KEY = 'stickyflow:state'
+export const STORAGE_KEY = 'taskflow:state'
+export const LEGACY_STORAGE_KEY = 'stickyflow:state'
 
-export type PersistedNote = {
-  id: string
-  text: string
-  color: string
-  position: {
-    x: number
-    y: number
-  }
-  zIndex: number
-  createdAt: string
-  updatedAt: string
-  groupId: string | null
-}
-
-export type PersistedBoardState = {
-  version: string
-  board: {
-    lastModified: string
-    theme: string
-  }
-  notes: PersistedNote[]
-}
-
-export async function openCleanBoard(page: Page): Promise<void> {
+export async function openCleanApp(page: Page): Promise<void> {
   await page.goto('/')
   await page.evaluate(() => localStorage.clear())
   await page.reload()
-  await expect(page.getByTestId('board')).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: 'Hoje' })).toBeVisible()
 }
 
-export async function createNote(
-  page: Page,
-  text: string,
-  x: number,
-  y: number,
-): Promise<PersistedNote> {
-  await page.getByTestId('board').dblclick({ position: { x, y } })
-  await page.getByLabel('Editar texto da nota').fill(text)
-  await page.keyboard.press('Escape')
-
-  return waitForPersistedNote(page, text)
-}
-
-export async function readPersistedState(
-  page: Page,
-): Promise<PersistedBoardState | null> {
-  return page.evaluate((key) => {
-    const payload = localStorage.getItem(key)
-    return payload ? JSON.parse(payload) : null
-  }, STORAGE_KEY)
-}
-
-export async function waitForPersistedNote(
-  page: Page,
-  text: string,
-): Promise<PersistedNote> {
-  let note: PersistedNote | undefined
-
-  await expect
-    .poll(async () => {
-      const state = await readPersistedState(page)
-      note = state?.notes.find((candidate) => candidate.text === text)
-      return note?.id ?? null
-    })
-    .not.toBeNull()
-
-  return note!
-}
-
-export async function waitForPersistedNoteById(
-  page: Page,
-  id: string,
-): Promise<PersistedNote> {
-  let note: PersistedNote | undefined
-
-  await expect
-    .poll(async () => {
-      const state = await readPersistedState(page)
-      note = state?.notes.find((candidate) => candidate.id === id)
-      return note ? JSON.stringify(note) : null
-    })
-    .not.toBeNull()
-
-  return note!
-}
-
-export async function waitForPersistedNoteMatching(
-  page: Page,
-  id: string,
-  predicate: (note: PersistedNote) => boolean,
-): Promise<PersistedNote> {
-  let note: PersistedNote | undefined
-
-  await expect
-    .poll(async () => {
-      const state = await readPersistedState(page)
-      note = state?.notes.find((candidate) => candidate.id === id)
-      return note && predicate(note) ? JSON.stringify(note) : null
-    })
-    .not.toBeNull()
-
-  return note!
-}
-
-export async function waitForPersistedNoteCount(
-  page: Page,
-  count: number,
-): Promise<void> {
-  await expect
-    .poll(async () => {
-      const state = await readPersistedState(page)
-      return state?.notes.length ?? 0
-    })
-    .toBe(count)
-}
-
-export async function importJsonPayload(
-  page: Page,
-  payload: string,
-  filename = 'stickyflow-backup.json',
-): Promise<void> {
+/** Navega por uma smart view usando a navegação visível (sidebar ou bottom nav). */
+export async function goToView(page: Page, name: string): Promise<void> {
   await page
-    .getByLabel('Selecionar arquivo de importação')
-    .setInputFiles({
-      name: filename,
-      mimeType: 'application/json',
-      buffer: Buffer.from(payload),
-    })
+    .getByRole('button', { name, exact: true })
+    .filter({ visible: true })
+    .first()
+    .click()
+  await expect(page.getByRole('heading', { level: 1, name })).toBeVisible()
 }
 
-export async function confirmImport(page: Page): Promise<void> {
-  await expect(page.getByRole('dialog')).toContainText('Substituir quadro atual?')
-  await page.getByRole('button', { name: 'Importar e substituir' }).click()
-  await expect(page.getByRole('status')).toHaveText('Quadro restaurado')
+export async function addTaskViaQuickAdd(page: Page, title: string): Promise<void> {
+  const input = page.getByLabel('Adicionar tarefa')
+  await input.fill(title)
+  await input.press('Enter')
+  await expect(page.getByText(title)).toBeVisible()
 }
 
-export async function dragNoteBy(
-  page: Page,
-  note: Locator,
-  delta: { x: number; y: number },
-): Promise<void> {
-  const box = await note.boundingBox()
-  if (!box) throw new Error('Nota não está visível para arrastar')
-
-  const startX = box.x + box.width / 2
-  const startY = box.y + box.height / 2
-
-  await page.mouse.move(startX, startY)
-  await page.mouse.down()
-  await page.mouse.move(startX + delta.x, startY + delta.y, { steps: 8 })
-  await page.mouse.up()
+export async function readPersistedState(page: Page): Promise<unknown> {
+  return page.evaluate((key) => {
+    const raw = localStorage.getItem(key)
+    return raw ? (JSON.parse(raw) as unknown) : null
+  }, STORAGE_KEY)
 }
