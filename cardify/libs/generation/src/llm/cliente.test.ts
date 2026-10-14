@@ -48,6 +48,22 @@ describe('LlmClienteRegistrado', () => {
     expect(orcamento.gastoCentavos).toBe(0);
   });
 
+  it('reserva pela saída estimada quando informada, limitada a maxTokens', async () => {
+    const reservas: number[] = [];
+    const orcamento = new OrcamentoJob(100);
+    const provider: LlmProvider = {
+      completar: async () => {
+        reservas.push(orcamento.gastoCentavos);
+        return { texto: '', modelo: 'fake', tokensIn: 0, tokensOut: 0, latenciaMs: 0 };
+      },
+    };
+    const cliente = new LlmClienteRegistrado(provider, ledgerEmMemoria());
+    await cliente.chamar({ jobId: 'j', estagio: 'extracao', orcamento }, { ...req, tokensSaidaEstimados: 300 });
+    await cliente.chamar({ jobId: 'j', estagio: 'extracao', orcamento }, { ...req, tokensSaidaEstimados: 5000 });
+    expect(reservas[0]).toBeCloseTo(custoCentavos('claude-haiku-5-5', 200, 300), 9);
+    expect(reservas[1]).toBeCloseTo(custoCentavos('claude-haiku-5-5', 200, 1000), 9);
+  });
+
   it('usa modeloPorTier para estimar', async () => {
     let gasto = 0;
     const orcamento = new OrcamentoJob(1000);

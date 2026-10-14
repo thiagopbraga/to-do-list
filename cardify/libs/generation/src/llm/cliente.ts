@@ -39,7 +39,12 @@ export class LlmClienteRegistrado implements LlmCliente {
   async chamar(ctx: ContextoChamadaLlm, req: LlmRequisicao): Promise<LlmResposta> {
     const caracteres = req.sistema.length + req.mensagens.reduce((soma, m) => soma + m.conteudo.length, 0);
     const tokensInEstimados = Math.ceil(caracteres / CARACTERES_POR_TOKEN);
-    const estimativa = custoCentavos(this.modeloPorTier[req.tier], tokensInEstimados, req.maxTokens, this.usdBrl);
+    const estimativa = custoCentavos(
+      this.modeloPorTier[req.tier],
+      tokensInEstimados,
+      Math.min(req.tokensSaidaEstimados ?? req.maxTokens, req.maxTokens),
+      this.usdBrl,
+    );
 
     ctx.orcamento.reservar(estimativa);
 

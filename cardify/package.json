@@ -21,7 +21,8 @@
     "db:migrate": "npm run -w @cardify/db migrate",
     "dev:api": "npm run -w @cardify/api dev",
     "dev:worker": "npm run -w @cardify/worker dev",
-    "dev:web": "npm run -w @cardify/web dev"
+    "dev:web": "npm run -w @cardify/web dev",
+    "test:apkg": "vitest run --project int libs/apkg tools"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

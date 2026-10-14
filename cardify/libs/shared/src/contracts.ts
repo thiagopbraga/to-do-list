@@ -79,6 +79,11 @@ export interface LlmRequisicao {
   sistema: string;
   mensagens: LlmMensagem[];
   maxTokens: number;
+  /**
+   * Saída esperada (inclui raciocínio), usada para reservar orçamento antes da chamada.
+   * Sem ela, a reserva assume `maxTokens` inteiro, o que trava o orçamento com chamadas em paralelo.
+   */
+  tokensSaidaEstimados?: number;
   temperatura?: number;
   /** JSON Schema que a saída deve obedecer (saída estruturada). */
   jsonSchema?: Record<string, unknown>;
