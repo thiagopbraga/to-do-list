@@ -31,3 +31,24 @@ npm run lint
 npm test            # unitários
 npm run test:int    # integração (Postgres)
 ```
+
+## Rodar localmente
+
+```
+cp .env.example .env
+docker compose up -d                       # Postgres + MinIO
+npm run db:migrate
+npm run build:server
+npm run dev:api & npm run dev:worker & npm run dev:web
+```
+
+Com `LLM_PROVIDER=fake` e `PAGAMENTO_PROVIDER=fake` (padrão) tudo funciona sem chaves externas.
+
+## Testes
+
+```
+npm test                                   # unitários
+npm run test:int                           # integração (Postgres e MinIO)
+bash tools/anki/preparar.sh && npm run test:apkg   # .apkg contra o Anki real
+npm run test:e2e                           # E2E com Playwright (ver e2e/README.md)
+```

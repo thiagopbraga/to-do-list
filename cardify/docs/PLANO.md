@@ -138,3 +138,33 @@ Verificação: `npm run typecheck && npm test` verdes na raiz de `cardify/`.
 4. Subir api + worker + web com `LLM_PROVIDER=fake` e `PAGAMENTO_PROVIDER=fake`; executar o fluxo do PRD §7 no navegador (Playwright): colar texto → amostra → login → paywall fake → revisão → exportar `.apkg`.
 5. Com chave real da Anthropic: processar o fixture de aula de 40 páginas, medir tempo (< 2 min para 80+ cards) e custo no `llm_calls` (≤ R$ 0,60 por 100 cards).
 6. Conferir critérios do PRD §14; o item 4 (importação sem erro e sem duplicata) é bloqueante. Verificação no AnkiDroid fica como passo manual do usuário.
+
+---
+
+## Status final da execução
+
+Todas as tasks T00–T30 concluídas, mais a T31 (retenção de dados, lacuna encontrada na revisão final). Cada entrega de sub-agente foi verificada pelo gerente antes do commit.
+
+| Verificação | Resultado |
+|---|---|
+| Lint e typecheck do monorepo | verdes |
+| Testes unitários | 336 |
+| Testes de integração (Postgres, MinIO, processos reais) | 314 |
+| Suíte `.apkg` contra o Anki 25.2 real (RFC §9) | 98 — também verde no Anki 26.09.3 |
+| E2E Playwright do fluxo do PRD §7 | 7 cenários |
+| `npm audit --omit=dev --audit-level=high` | 0 vulnerabilidades |
+
+**Gate do `.apkg`:** o empacotador próprio passou; o fallback para genanki não foi necessário.
+
+### Decisões tomadas durante a execução
+- CSV/TSV com coluna GUID e os note types do Cardify: reimportar atualiza em vez de duplicar, mas exige que a coleção já tenha recebido um `.apkg` do Cardify (os nomes de fábrica do Anki variam por idioma).
+- `mod` da nota = última edição do card no Cardify: reexportar não sobrescreve edições feitas dentro do Anki.
+- Teto rígido de LLM por job = 2× a meta de R$ 0,60/100 cards (mínimo 30 centavos); a meta é acompanhada no painel `/v1/admin/metricas`.
+- Assinatura cancelada ou atrasada mantém o plano até o fim do período pago; excluir a conta cancela a assinatura no provedor antes de apagar.
+- Regenerar card exige conta; o fluxo anônimo fica restrito à amostra.
+
+### Pendências que dependem de recursos externos
+- **Custo e qualidade reais dos cards:** sem `ANTHROPIC_API_KEY` no ambiente de desenvolvimento. Pela tabela de preços, o Sonnet 5.5 no estágio B tende a custar ~R$ 1,00 por 100 cards, acima da meta de R$ 0,60; trocar para o Haiku 5.5 é uma variável de ambiente (`LLM_MODELO_FORTE`). Medir com material real antes de decidir.
+- **Imagem Docker:** o `docker build` não completa no ambiente local (apt bloqueado); o job `imagem` da CI valida.
+- **AnkiDroid:** verificação manual periódica (RFC §9).
+- **MinIO de desenvolvimento** usa a imagem legada `bitnamilegacy/minio`; em produção, usar um S3 gerenciado.
