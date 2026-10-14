@@ -2,6 +2,10 @@
 export const MODEL_ID_BASICO = 1607392319;
 export const MODEL_ID_CLOZE = 1607392320;
 
+/** Nomes dos note types, iguais no .apkg e na coluna "Note type" do CSV/TSV. */
+export const NOTE_TYPE_NOME_BASICO = 'Cardify Básico';
+export const NOTE_TYPE_NOME_CLOZE = 'Cardify Cloze';
+
 /** Prefixo de todas as tags exportadas: `cardify::<slug-documento>::<slug-secao>` (RFC §5.6). */
 export const PREFIXO_TAG = 'cardify';
 
