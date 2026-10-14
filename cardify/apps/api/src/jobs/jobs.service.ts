@@ -17,6 +17,8 @@ import {
   chaveStorage,
   type CriarJob,
   CUSTO_MAX_CENTAVOS_POR_100_CARDS,
+  FATOR_TETO_ORCAMENTO,
+  ORCAMENTO_MINIMO_JOB_CENTAVOS,
   donoStorage,
   estimarCards,
   FILAS,
@@ -45,7 +47,6 @@ import {
 } from './util';
 
 
-const ORCAMENTO_MINIMO_CENTAVOS = 15;
 const RETENCAO_DOCUMENTO_MS = 7 * 24 * 60 * 60 * 1000;
 const LIMITE_LISTAGEM = 50;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -126,8 +127,8 @@ export class JobsService {
           amostra,
           nome,
           orcamentoCentavos: Math.max(
-            ORCAMENTO_MINIMO_CENTAVOS,
-            (reservado * CUSTO_MAX_CENTAVOS_POR_100_CARDS) / 100,
+            ORCAMENTO_MINIMO_JOB_CENTAVOS,
+            (reservado * CUSTO_MAX_CENTAVOS_POR_100_CARDS * FATOR_TETO_ORCAMENTO) / 100,
           ),
           cardsReservados: reservado,
           idempotencyKey: chave,

@@ -15,7 +15,7 @@ import { validarCloze } from './cloze';
 import { LlmClienteRegistrado } from './llm/cliente';
 import { FakeLlmProvider } from './llm/fake';
 import { OrcamentoJob } from './llm/orcamento';
-import { gerarCards, regenerarCard, type ChunkPersistido } from './pipeline';
+import { gerarCards, MAX_CARDS_POR_CHAMADA, regenerarCard, type ChunkPersistido } from './pipeline';
 
 const COLADO = readFileSync(resolve(__dirname, '..', '..', '..', 'fixtures', 'texto', 'colado.txt'), 'utf8');
 const PARAGRAFOS = COLADO.split(/\n\n+/).filter((p) => p.trim() !== '');
@@ -479,5 +479,36 @@ describe('regenerarCard', () => {
     expect(novo.tipo).toBe('basico');
     expect(novo.frente).toBe('A ____ é a organela responsável pela respiração celular.');
     expect(estagios()).toEqual(['regeneracao', 'reformulacao_cloze']);
+  });
+});
+
+describe('meta de cards limitada pelo teto do job', () => {
+  it('amostra com orçamento de 15 centavos e texto longo num chunk só gera os 10 cards (estimativa pelo preço do modelo forte)', async () => {
+    const { cliente, orcamento } = montar(new FakeLlmProvider(), 15);
+    const unico = chunkDe(0, PARAGRAFOS.join('\n\n'), ['Direito Constitucional']);
+
+    const resultado = await gerarCards(cliente, entrada([unico], orcamento, {}, 10));
+
+    expect(resultado.cards).toHaveLength(10);
+    expect(resultado.motivoParcial).toBe('limite_cards');
+  });
+
+  it(`nunca pede mais que ${MAX_CARDS_POR_CHAMADA} cards numa chamada`, async () => {
+    const pedidos: string[] = [];
+    const base = new FakeLlmProvider();
+    const espiao: LlmProvider = {
+      completar: async (req) => {
+        if (req.tier === 'forte') pedidos.push(req.mensagens.at(-1)?.conteudo ?? '');
+        return base.completar(req);
+      },
+    };
+    const { cliente, orcamento } = montar(espiao);
+    const unico = chunkDe(0, PARAGRAFOS.join('\n\n'), ['Direito Constitucional']);
+
+    await gerarCards(cliente, entrada([unico], orcamento, { densidade: 'exaustivo' }));
+
+    const metas = pedidos.map((p) => Number(/aproximadamente (\d+) cards/.exec(p)?.[1]));
+    expect(metas.length).toBeGreaterThan(0);
+    expect(Math.max(...metas)).toBeLessThanOrEqual(MAX_CARDS_POR_CHAMADA);
   });
 });

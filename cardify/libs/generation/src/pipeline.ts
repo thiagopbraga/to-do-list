@@ -29,6 +29,9 @@ import {
   sistemaFormulacao,
 } from './prompts';
 
+/** Teto de cards pedidos ao LLM numa chamada de formulação: mantém a reserva de orçamento por chamada previsível. */
+export const MAX_CARDS_POR_CHAMADA = 15;
+
 export interface ChunkPersistido extends ChunkDocumento {
   id: string;
 }
@@ -183,7 +186,12 @@ async function processarChunk(
   if (fatos.length === 0) return [];
 
   const fatosLimitados = fatos.map((f) => ({ ...f, fonteOffset: limitar(f.fonteOffset, 0, chunk.texto.length) }));
-  const meta = metaDeCards(chunk, entrada.parametros.densidade, fatosLimitados.length);
+  // Sem esse teto, uma única chamada pode estimar mais que o orçamento inteiro do job (ex.: amostra de 10 cards).
+  const meta = Math.min(
+    metaDeCards(chunk, entrada.parametros.densidade, fatosLimitados.length),
+    entrada.limiteCards ?? Number.POSITIVE_INFINITY,
+    MAX_CARDS_POR_CHAMADA,
+  );
   const { cards } = await chamar(
     c,
     'formulacao',

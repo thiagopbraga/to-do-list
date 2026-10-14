@@ -46,6 +46,14 @@ export const CLOZE_MIN_CONTEXTO_CHARS = 15;
 /** Teto de custo de LLM por baralho de 100 cards, em centavos de real (PRD §8). */
 export const CUSTO_MAX_CENTAVOS_POR_100_CARDS = 60;
 
+/**
+ * Teto rígido de LLM por job (RFC §4.5) = meta acima × este fator, com piso de ORCAMENTO_MINIMO_JOB_CENTAVOS.
+ * A meta é acompanhada no painel de métricas; o teto só corta gasto descontrolado. Igualar teto e meta impede
+ * até a primeira chamada de formulação no modelo forte (~14 centavos para 15 cards no Sonnet 5.5).
+ */
+export const FATOR_TETO_ORCAMENTO = 2;
+export const ORCAMENTO_MINIMO_JOB_CENTAVOS = 30;
+
 export const URL_ASSINADA_TTL_SEGUNDOS = 15 * 60;
 
 export const FILAS = {

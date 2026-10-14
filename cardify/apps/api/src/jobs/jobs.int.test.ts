@@ -50,7 +50,7 @@ describe('jobs', () => {
         documentId: doc.id,
         amostra: false,
         cardsReservados: 6,
-        orcamentoCentavos: 15,
+        orcamentoCentavos: 30,
         params: PARAMETROS,
       });
       expect(doc).toMatchObject({ tipo: 'texto', status: 'enviado', sha256: sha256Hex(texto), nome: 'Fisio', userId });
@@ -74,7 +74,7 @@ describe('jobs', () => {
       const [job] = await todosJobs();
       expect(job.nome).toBe('Texto colado');
       expect(job.cardsReservados).toBe(30);
-      expect(job.orcamentoCentavos).toBe(18);
+      expect(job.orcamentoCentavos).toBe(36);
     });
 
     it('amostra limita a estimativa a 10 cards', async () => {
@@ -336,7 +336,7 @@ describe('jobs', () => {
         anonSessionId: anonId,
         amostra: true,
         cardsReservados: LIMITES_ANONIMO.maxCards,
-        orcamentoCentavos: 15,
+        orcamentoCentavos: 30,
       });
       expect(doc).toMatchObject({ userId: null, anonSessionId: anonId, tipo: 'texto' });
       expect(doc.storageKey).toBe(`docs/a-${anonId}/${doc.id}/original`);
