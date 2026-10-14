@@ -35,7 +35,8 @@ export const CHUNKING = {
 
 export const DEDUP_LIMIAR_JACCARD = 0.85;
 
-export const CLOZE_REGEX = /\{\{c(\d+)::(.+?)(::.+?)?\}\}/g;
+/** `.*?` (e não `.+?`) para que `{{c1::}}` seja reconhecido como oclusão vazia. */
+export const CLOZE_REGEX = /\{\{c(\d+)::(.*?)(::.*?)?\}\}/g;
 export const CLOZE_MIN_CONTEXTO_CHARS = 15;
 
 /** Teto de custo de LLM por baralho de 100 cards, em centavos de real (PRD §8). */
