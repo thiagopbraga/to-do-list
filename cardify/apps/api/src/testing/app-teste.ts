@@ -48,7 +48,9 @@ export async function criarAppTeste(ajustar?: (builder: TestingModuleBuilder) =>
   if (ajustar) builder = ajustar(builder);
 
   const modulo = await builder.compile();
-  const app = configurarApp(modulo.createNestApplication<NestFastifyApplication>(new FastifyAdapter(), { rawBody: true }));
+  const app = await configurarApp(
+    modulo.createNestApplication<NestFastifyApplication>(new FastifyAdapter(), { rawBody: true }),
+  );
   await app.init();
   await app.getHttpAdapter().getInstance().ready();
 

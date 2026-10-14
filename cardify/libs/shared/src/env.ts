@@ -38,7 +38,7 @@ const EnvBase = z.object({
   SESSION_SECRET: z.string().min(1).optional(),
   GOOGLE_CLIENT_ID: z.string().min(1).optional(),
   GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
-  GOOGLE_REDIRECT_URI: z.string().url().default('http://localhost:4000/auth/google/callback'),
+  GOOGLE_REDIRECT_URI: z.string().url().default('http://localhost:4000/v1/auth/google/callback'),
 
   SMTP_URL: z.string().min(1).optional(),
   EMAIL_FROM: z.string().min(1).default('Cardify <noreply@cardify.local>'),
@@ -47,6 +47,8 @@ const EnvBase = z.object({
   TURNSTILE_SECRET: z.string().min(1).optional(),
 
   ANON_TETO_DIARIO_CENTAVOS: z.coerce.number().int().nonnegative().default(2000),
+  /** true atrás de proxy reverso/PaaS: `request.ip` passa a vir de X-Forwarded-For (limite anônimo por IP). */
+  TRUST_PROXY: booleano(false),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
 });
 
