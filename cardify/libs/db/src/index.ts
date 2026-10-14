@@ -1,2 +1,5 @@
-// T02 — schema Drizzle (RFC §6), cliente e migrations.
-export {};
+export * from './schema';
+export * from './client';
+export * from './migrar';
+export * from './testing';
+export { sql, eq, and, desc, asc, inArray, isNull } from 'drizzle-orm';
