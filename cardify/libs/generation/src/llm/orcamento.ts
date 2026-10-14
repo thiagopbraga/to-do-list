@@ -1,20 +1,28 @@
-import { naoImplementado, type Orcamento } from '@cardify/shared';
+import { OrcamentoEsgotadoError, type Orcamento } from '@cardify/shared';
 
-/** T10 — orçamento por job (RFC §4.5). */
+/** Orçamento por job (RFC §4.5): gasto confirmado + reservas em aberto. */
 export class OrcamentoJob implements Orcamento {
+  private gasto: number;
+
   constructor(
     readonly tetoCentavos: number,
     gastoInicialCentavos = 0,
   ) {
-    void gastoInicialCentavos;
+    this.gasto = gastoInicialCentavos;
   }
+
   get gastoCentavos(): number {
-    return naoImplementado('T10');
+    return this.gasto;
   }
-  reservar(_estimativaCentavos: number): void {
-    naoImplementado('T10');
+
+  reservar(estimativaCentavos: number): void {
+    if (this.gasto + estimativaCentavos > this.tetoCentavos) {
+      throw new OrcamentoEsgotadoError(this.tetoCentavos, this.gasto);
+    }
+    this.gasto += estimativaCentavos;
   }
-  ajustar(_estimativaCentavos: number, _realCentavos: number): void {
-    naoImplementado('T10');
+
+  ajustar(estimativaCentavos: number, realCentavos: number): void {
+    this.gasto += realCentavos - estimativaCentavos;
   }
 }

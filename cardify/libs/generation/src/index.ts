@@ -7,3 +7,4 @@ export * from './llm/precos';
 export * from './llm/anthropic';
 export * from './llm/fake';
 export * from './llm/estruturado';
+export * from './llm/json-schema';
