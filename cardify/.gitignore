@@ -8,5 +8,6 @@ coverage
 .env.local
 test-results
 playwright-report
-tools/anki-check/.venv
+tools/**/.venv
+__pycache__
 tmp

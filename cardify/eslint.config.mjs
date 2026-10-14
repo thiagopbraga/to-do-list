@@ -3,7 +3,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/.next/**', '**/node_modules/**', '**/coverage/**', 'apps/web/next-env.d.ts', 'tools/anki-check/.venv/**'] },
+  { ignores: ['**/dist/**', '**/.next/**', '**/node_modules/**', '**/coverage/**', 'apps/web/next-env.d.ts', 'tools/**/.venv/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
