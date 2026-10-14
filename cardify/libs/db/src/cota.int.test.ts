@@ -259,7 +259,7 @@ describe('planos e períodos', () => {
     expect(await planoVigente(db, userId, AGORA)).toBe('essencial');
   });
 
-  it('assinatura expirada ou não ativa cai para grátis', async () => {
+  it('assinatura expirada ou nunca paga cai para grátis', async () => {
     await db.insert(subscriptions).values([
       {
         userId,
@@ -271,9 +271,9 @@ describe('planos e períodos', () => {
       {
         userId,
         plano: 'ilimitado',
-        status: 'atrasada',
-        periodoInicio: new Date('2026-03-01T00:00:00Z'),
-        periodoFim: new Date('2026-04-01T00:00:00Z'),
+        status: 'pendente',
+        periodoInicio: null,
+        periodoFim: null,
       },
     ]);
 
@@ -281,6 +281,18 @@ describe('planos e períodos', () => {
     await reservar(5);
     const [periodo] = await periodos();
     expect(periodo.limiteCards).toBe(30);
+  });
+
+  it.each(['cancelada', 'atrasada'] as const)('assinatura %s mantém o plano até o fim do período pago', async (status) => {
+    await db.insert(subscriptions).values({
+      userId,
+      plano: 'ilimitado',
+      status,
+      periodoInicio: new Date('2026-03-01T00:00:00Z'),
+      periodoFim: new Date('2026-04-01T00:00:00Z'),
+    });
+    expect(await planoVigente(db, userId, AGORA)).toBe('ilimitado');
+    expect(await planoVigente(db, userId, new Date('2026-04-02T00:00:00Z'))).toBe('gratis');
   });
 
   it('plano anual recorta o ano em períodos mensais a partir de periodo_inicio', async () => {

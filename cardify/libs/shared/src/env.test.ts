@@ -2,6 +2,13 @@ import { afterEach, vi } from 'vitest';
 import { carregarEnv, EnvSchema } from './env';
 
 const SEGREDO_32 = 'a'.repeat(32);
+const PROVIDERS_REAIS = {
+  LLM_PROVIDER: 'anthropic',
+  ANTHROPIC_API_KEY: 'sk-teste',
+  PAGAMENTO_PROVIDER: 'asaas',
+  ASAAS_API_KEY: 'chave-asaas',
+  ASAAS_WEBHOOK_TOKEN: 'token-webhook',
+};
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -127,12 +134,7 @@ describe('carregarEnv: regras condicionais (superRefine)', () => {
   });
 
   it('NODE_ENV=production aceita SESSION_SECRET com 32 caracteres', () => {
-    const env = carregarEnv({
-      NODE_ENV: 'production',
-      SESSION_SECRET: SEGREDO_32,
-      S3_ACCESS_KEY_ID: 'chave',
-      S3_SECRET_ACCESS_KEY: 'segredo',
-    });
+    const env = carregarEnv({ ...PROVIDERS_REAIS, NODE_ENV: 'production', SESSION_SECRET: SEGREDO_32, S3_ACCESS_KEY_ID: 'chave', S3_SECRET_ACCESS_KEY: 'segredo' });
 
     expect(env.SESSION_SECRET).toBe(SEGREDO_32);
   });
@@ -161,6 +163,14 @@ describe('carregarEnv: regras condicionais (superRefine)', () => {
   });
 });
 
+describe('providers fake em production', () => {
+  it('recusa pagamento e LLM fake', () => {
+    expect(() => carregarEnv({ NODE_ENV: 'production', SESSION_SECRET: 'x'.repeat(32), S3_ACCESS_KEY_ID: 'chave', S3_SECRET_ACCESS_KEY: 'segredo' })).toThrow(
+      /PAGAMENTO_PROVIDER[\s\S]*LLM_PROVIDER|LLM_PROVIDER[\s\S]*PAGAMENTO_PROVIDER/,
+    );
+  });
+});
+
 describe('credenciais de desenvolvimento em production', () => {
   it('recusa minioadmin com NODE_ENV=production', () => {
     expect(() =>
@@ -169,7 +179,7 @@ describe('credenciais de desenvolvimento em production', () => {
   });
 
   it('aceita credenciais próprias em production', () => {
-    const env = carregarEnv({ NODE_ENV: 'production', SESSION_SECRET: 'x'.repeat(32), S3_ACCESS_KEY_ID: 'chave', S3_SECRET_ACCESS_KEY: 'segredo' });
+    const env = carregarEnv({ ...PROVIDERS_REAIS, NODE_ENV: 'production', SESSION_SECRET: 'x'.repeat(32), S3_ACCESS_KEY_ID: 'chave', S3_SECRET_ACCESS_KEY: 'segredo' });
     expect(env.S3_ACCESS_KEY_ID).toBe('chave');
   });
 });

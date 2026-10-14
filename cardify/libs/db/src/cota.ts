@@ -1,5 +1,5 @@
 import { CardifyError, CotaExcedidaError, PLANOS, type Plano } from '@cardify/shared';
-import { and, desc, eq, gt, lte, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, lte, sql } from 'drizzle-orm';
 import type { Db } from './client';
 import { type QuotaPeriodRow, jobs, quotaPeriods, subscriptions } from './schema';
 
@@ -37,7 +37,12 @@ async function assinaturaVigente(db: Executor, userId: string, agora: Date) {
     .select()
     .from(subscriptions)
     .where(
-      and(eq(subscriptions.userId, userId), eq(subscriptions.status, 'ativa'), gt(subscriptions.periodoFim, agora)),
+      // Cancelada ou atrasada mantém o plano até o fim do período já pago.
+      and(
+        eq(subscriptions.userId, userId),
+        inArray(subscriptions.status, ['ativa', 'atrasada', 'cancelada']),
+        gt(subscriptions.periodoFim, agora),
+      ),
     )
     .orderBy(desc(subscriptions.periodoFim))
     .limit(1);

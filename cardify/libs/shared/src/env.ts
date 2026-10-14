@@ -86,6 +86,15 @@ export const EnvSchema = EnvBase.superRefine((env, ctx) => {
     });
   }
 
+  if (env.NODE_ENV === 'production' && env.PAGAMENTO_PROVIDER === 'fake') {
+    // O provider fake expõe /webhooks/pagamento/simular: em produção daria plano pago a qualquer um.
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['PAGAMENTO_PROVIDER'], message: 'fake não é aceito em production' });
+  }
+
+  if (env.NODE_ENV === 'production' && env.LLM_PROVIDER === 'fake') {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['LLM_PROVIDER'], message: 'fake não é aceito em production' });
+  }
+
   if (env.NODE_ENV === 'production' && (env.S3_ACCESS_KEY_ID === 'minioadmin' || env.S3_SECRET_ACCESS_KEY === 'minioadmin')) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

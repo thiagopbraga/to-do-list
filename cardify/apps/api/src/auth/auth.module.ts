@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { type Env } from '@cardify/shared';
 import { ENV } from '../infra/tokens';
+import { PagamentoModule } from '../pagamento/pagamento.module';
 import { AuthController } from './auth.controller';
 import { ClienteGoogleArctic } from './cliente-google';
 import { ContaController } from './conta.controller';
@@ -12,6 +13,7 @@ import { CLIENTE_GOOGLE, ENVIADOR_EMAIL } from './tokens';
 
 /** T21 — sessões, login Google e por e-mail, sessão anônima, vínculo do trabalho anônimo e exclusão de conta. */
 @Module({
+  imports: [PagamentoModule],
   controllers: [AuthController, ContaController],
   providers: [
     SessoesService,

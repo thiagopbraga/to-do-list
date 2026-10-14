@@ -1,4 +1,7 @@
-import { cards, documents, eq, exportacoes, jobs, magicLinks, sessions, users } from '@cardify/db';
+import { cards, documents, eq, exportacoes, jobs, magicLinks, sessions, subscriptions, users } from '@cardify/db';
+import type { PagamentoProvider } from '@cardify/shared';
+import { vi } from 'vitest';
+import { PAGAMENTO_PROVIDER } from '../pagamento/tokens';
 import { inserirJobDireto } from '../jobs/helpers-teste';
 import { COOKIE_SESSAO } from './constantes';
 import { caminhoDoLink, Cookies, criarAppAuth, type AppAuth } from './helpers-teste';
@@ -102,5 +105,53 @@ describe('sessão de usuário, saída e exclusão de conta', () => {
       a.t.storage.apagar = original;
     }
     expect(await a.t.banco.db.select().from(users)).toHaveLength(0);
+  });
+});
+
+describe('exclusão de conta com assinatura', () => {
+  let a: AppAuth;
+
+  beforeAll(async () => {
+    a = await criarAppAuth();
+  });
+  afterAll(() => a.t.fechar());
+  beforeEach(async () => {
+    await a.t.banco.limpar();
+    a.email.mensagens.length = 0;
+    vi.restoreAllMocks();
+  });
+
+  async function entrarComAssinatura(email: string) {
+    await a.t.app.inject({ method: 'POST', url: '/v1/auth/email', payload: { email } });
+    const res = await a.t.app.inject({ method: 'GET', url: caminhoDoLink(a.email) });
+    const [usuario] = await a.t.banco.db.select().from(users).where(eq(users.email, email));
+    await a.t.banco.db
+      .insert(subscriptions)
+      .values({ userId: usuario.id, plano: 'essencial', status: 'ativa', providerSubId: 'fake_sub_1', periodoInicio: new Date(), periodoFim: new Date(Date.now() + 86_400_000) });
+    return { cookies: new Cookies().absorver(res), userId: usuario.id };
+  }
+
+  it('cancela a assinatura no provedor antes de apagar', async () => {
+    const provider = a.t.app.get<PagamentoProvider>(PAGAMENTO_PROVIDER);
+    const cancelar = vi.spyOn(provider, 'cancelarAssinatura');
+    const { cookies, userId } = await entrarComAssinatura('bia@exemplo.com');
+
+    const res = await a.t.app.inject({ method: 'DELETE', url: '/v1/conta', headers: cookies.header });
+
+    expect(res.statusCode).toBe(204);
+    expect(cancelar).toHaveBeenCalledWith('fake_sub_1');
+    expect(await a.t.banco.db.select().from(users).where(eq(users.id, userId))).toHaveLength(0);
+  });
+
+  it('se o provedor falhar, não apaga nada e responde 502', async () => {
+    const provider = a.t.app.get<PagamentoProvider>(PAGAMENTO_PROVIDER);
+    vi.spyOn(provider, 'cancelarAssinatura').mockRejectedValue(new Error('provedor fora do ar'));
+    const { cookies, userId } = await entrarComAssinatura('caio@exemplo.com');
+
+    const res = await a.t.app.inject({ method: 'DELETE', url: '/v1/conta', headers: cookies.header });
+
+    expect(res.statusCode).toBe(502);
+    expect(res.json()).toMatchObject({ erro: 'cancelamento_falhou' });
+    expect(await a.t.banco.db.select().from(users).where(eq(users.id, userId))).toHaveLength(1);
   });
 });

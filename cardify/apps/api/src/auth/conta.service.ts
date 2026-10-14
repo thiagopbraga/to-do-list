@@ -1,7 +1,8 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { BadGatewayException, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { type Db, documents, eq, exportacoes, jobs, magicLinks, users } from '@cardify/db';
 import type { StorageService } from '@cardify/shared';
 import { DB, STORAGE } from '../infra/tokens';
+import { AssinaturaService } from '../pagamento/assinatura.service';
 
 @Injectable()
 export class ContaService {
@@ -10,12 +11,26 @@ export class ContaService {
   constructor(
     @Inject(DB) private readonly db: Db,
     @Inject(STORAGE) private readonly storage: StorageService,
+    private readonly assinaturas: AssinaturaService,
   ) {}
 
   /** Exclusão imediata (RFC §11): objetos do storage primeiro, depois o usuário; as FKs fazem a cascata. */
   async excluir(userId: string): Promise<void> {
     const [usuario] = await this.db.select({ email: users.email }).from(users).where(eq(users.id, userId));
     if (!usuario) return;
+
+    // Sem cancelar no provedor, o usuário continuaria sendo cobrado depois de apagar a conta: nesse caso não apaga nada.
+    try {
+      await this.assinaturas.cancelar(userId);
+    } catch (erro) {
+      if (!(erro instanceof NotFoundException)) {
+        this.logger.error(`exclusão de conta: cancelamento da assinatura falhou: ${String(erro)}`);
+        throw new BadGatewayException({
+          erro: 'cancelamento_falhou',
+          mensagem: 'Não foi possível cancelar sua assinatura agora. Nada foi apagado; tente novamente em instantes.',
+        });
+      }
+    }
 
     const docs = await this.db
       .select({ storageKey: documents.storageKey, textoExtraidoKey: documents.textoExtraidoKey })

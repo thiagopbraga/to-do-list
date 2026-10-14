@@ -244,6 +244,11 @@ describe('Turnstile sem TURNSTILE_SECRET', () => {
       SESSION_SECRET: 'x'.repeat(40),
       S3_ACCESS_KEY_ID: 'chave',
       S3_SECRET_ACCESS_KEY: 'segredo',
+      LLM_PROVIDER: 'anthropic',
+      ANTHROPIC_API_KEY: 'sk-teste',
+      PAGAMENTO_PROVIDER: 'asaas',
+      ASAAS_API_KEY: 'chave-asaas',
+      ASAAS_WEBHOOK_TOKEN: 'token-webhook',
       TURNSTILE_SITE_KEY: SITE_KEY,
     });
     try {
