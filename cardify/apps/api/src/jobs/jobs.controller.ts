@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Headers, HttpCode, type MessageEvent, Param, Post, Sse } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpCode, type MessageEvent, Param, Post, Sse, UseGuards } from '@nestjs/common';
 import { type CriarJob, CriarJobSchema } from '@cardify/shared';
 import type { Observable } from 'rxjs';
+import { LimiteAnonimoGuard } from '../anonimo/limite-anonimo.guard';
 import { ZodPipe } from '../comum/zod.pipe';
 import { type Dono, DonoAtual } from '../sessao/dono';
 import { AceitaAnonimo } from '../sessao/sessao.guard';
@@ -11,6 +12,7 @@ export class JobsController {
   constructor(private readonly jobs: JobsService) {}
 
   @AceitaAnonimo()
+  @UseGuards(LimiteAnonimoGuard)
   @HttpCode(202)
   @Post('jobs')
   criar(
