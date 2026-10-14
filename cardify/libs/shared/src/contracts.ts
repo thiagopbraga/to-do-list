@@ -211,6 +211,11 @@ export interface NotaExportavel {
   /** Tags extras do usuário; as tags `cardify::...` são geradas pelo empacotador. */
   tags: string[];
   ordem: number;
+  /**
+   * Última alteração do card no Cardify. Vira o `mod` da nota: o Anki só atualiza notas com `mod` mais novo,
+   * então edições feitas pelo usuário dentro do Anki não são sobrescritas por reexportações de cards inalterados.
+   */
+  atualizadoEm?: Date;
 }
 
 export interface PacoteBaralho {
