@@ -157,6 +157,8 @@ export const jobs = pgTable(
     custoCentavos: doublePrecision('custo_centavos').notNull().default(0),
     cardsGerados: integer('cards_gerados').notNull().default(0),
     cardsReservados: integer('cards_reservados').notNull().default(0),
+    /** Execuções do pipeline iniciadas; na última o worker marca `falhou` e libera a reserva de cota. */
+    tentativas: integer('tentativas').notNull().default(0),
     estagioConcluido: estagioEnum('estagio_concluido'),
     idempotencyKey: text('idempotency_key'),
     erro: text('erro'),
