@@ -133,7 +133,7 @@ function escaparHtml(texto: string): string {
 /** Texto puro de um campo já escapado: o que o Anki guarda em `sfld` e usa no `csum`. */
 function textoPuro(campoHtml: string): string {
   return campoHtml
-    .replace(/<br>/g, ' ')
+    .replace(/<br>/g, '')
     .replace(/<[^>]*>/g, '')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')

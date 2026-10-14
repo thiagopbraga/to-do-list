@@ -1,5 +1,6 @@
 import type { NotaExportavel, PacoteBaralho } from '@cardify/shared';
 import { exportarDelimitado } from './delimitado';
+import { guidDoCard } from './packer';
 
 const ID = '00000000-0000-4000-8000-000000000001';
 
@@ -21,8 +22,23 @@ function pacote(notas: NotaExportavel[], parcial: Partial<PacoteBaralho> = {}): 
   return { nomeBaralho: 'Fisiologia', slugDocumento: 'fisiologia', notas, ...parcial };
 }
 
+/** Linhas de dados sem a última coluna (GUID), cortando no último separador fora de aspas. */
 function dados(saida: string): string[] {
-  return saida.split('\n').filter((linha) => linha !== '' && !linha.startsWith('#'));
+  return saida
+    .split('\n')
+    .filter((linha) => linha !== '' && !linha.startsWith('#'))
+    .map(semUltimaColuna);
+}
+
+function semUltimaColuna(linha: string): string {
+  let emAspas = false;
+  let ultimo = -1;
+  for (let i = 0; i < linha.length; i++) {
+    const c = linha[i];
+    if (c === '"') emAspas = !emAspas;
+    else if (!emAspas && (c === ',' || c === '\t')) ultimo = i;
+  }
+  return linha.slice(0, ultimo);
 }
 
 /** Parser mínimo RFC 4180 para o teste de ida e volta. Aspas dobradas viram aspas; o texto deve terminar em \n. */
@@ -66,7 +82,8 @@ describe('exportarDelimitado: cabeçalho', () => {
         '#notetype column:1',
         '#deck column:2',
         '#tags column:5',
-        '#columns:Note type,Deck,Front/Text,Back,Tags',
+        '#guid column:6',
+        '#columns:Note type,Deck,Front/Text,Back,Tags,GUID',
         '',
       ].join('\n'),
     );
@@ -81,7 +98,8 @@ describe('exportarDelimitado: cabeçalho', () => {
         '#notetype column:1',
         '#deck column:2',
         '#tags column:5',
-        '#columns:Note type\tDeck\tFront/Text\tBack\tTags',
+        '#guid column:6',
+        '#columns:Note type\tDeck\tFront/Text\tBack\tTags\tGUID',
         '',
       ].join('\n'),
     );
@@ -95,6 +113,14 @@ describe('exportarDelimitado: cabeçalho', () => {
 });
 
 describe('exportarDelimitado: linhas', () => {
+  it('última coluna é o mesmo GUID do .apkg, para reimportar atualizando', () => {
+    for (const separador of [',', '\t'] as const) {
+      const [linha] = parseDelimitado(exportarDelimitado(pacote([nota()]), separador).split('\n').filter((l) => !l.startsWith('#')).join('\n'), separador);
+      expect(linha).toHaveLength(6);
+      expect(linha[5]).toBe(guidDoCard(ID));
+    }
+  });
+
   it('básico: note type, deck, frente, verso e tags', () => {
     expect(dados(exportarDelimitado(pacote([nota()]), ','))).toEqual([
       'Cardify Básico,Fisiologia,Frente,Verso,cardify::fisiologia',
@@ -222,7 +248,7 @@ describe('exportarDelimitado: ida e volta', () => {
     const linhas = parseDelimitado(corpo, separador);
 
     expect(linhas).toHaveLength(2);
-    expect(linhas.every((campos) => campos.length === 5)).toBe(true);
+    expect(linhas.every((campos) => campos.length === 6)).toBe(true);
 
     expect(desfazerHtml(linhas[0][2])).toBe(frente);
     expect(linhas[0][3]).toBe('simples');

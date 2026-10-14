@@ -243,7 +243,7 @@ describe('AnkiApkgPacker', () => {
     for (const linha of colecao.notas) {
       const primeiro = linha.flds.split('\x1f')[0];
       const puro = primeiro
-        .replace(/<br>/g, ' ')
+        .replace(/<br>/g, '')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
         .replace(/&amp;/g, '&');

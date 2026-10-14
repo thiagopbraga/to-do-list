@@ -1,5 +1,8 @@
 // Frente e verso vão como HTML (#html:true): & < > viram entidades e quebras de linha viram <br>.
 // Campos que contêm o separador ou aspas vão entre aspas duplas (RFC 4180), também no TSV.
+// A coluna GUID é a mesma do .apkg: reimportar atualiza a nota em vez de duplicar. Os note types do Cardify
+// precisam existir na coleção (são criados ao importar qualquer .apkg do Cardify); numa coleção sem eles o
+// Anki descarta as linhas como missing_notetype.
 import {
   CardifyError,
   NOTE_TYPE_NOME_BASICO,
@@ -7,6 +10,7 @@ import {
   type NotaExportavel,
   type PacoteBaralho,
 } from '@cardify/shared';
+import { guidDoCard } from './packer';
 import { nomeDeckDaNota, tagsDaNota } from './tags';
 
 /** T14 — exportação CSV/TSV importável no Anki/AnkiDroid (RF-07). */
@@ -17,7 +21,8 @@ export function exportarDelimitado(pacote: PacoteBaralho, separador: ',' | '\t')
     '#notetype column:1',
     '#deck column:2',
     '#tags column:5',
-    `#columns:${['Note type', 'Deck', 'Front/Text', 'Back', 'Tags'].join(separador)}`,
+    '#guid column:6',
+    `#columns:${['Note type', 'Deck', 'Front/Text', 'Back', 'Tags', 'GUID'].join(separador)}`,
   ];
   const notas = [...pacote.notas].sort((a, b) => a.ordem - b.ordem);
   const linhas = notas.map((nota) => montarLinha(pacote, nota, separador));
@@ -34,6 +39,7 @@ function montarLinha(pacote: PacoteBaralho, nota: NotaExportavel, separador: ','
     escaparHtml(frente),
     escaparHtml(verso),
     tagsDaNota(pacote.slugDocumento, nota.trilhaTitulos, nota.tags).join(' '),
+    guidDoCard(nota.id),
   ];
   return colunas.map((coluna) => campo(coluna, separador)).join(separador);
 }
