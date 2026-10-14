@@ -1,0 +1,968 @@
+{
+  "paginas": 6,
+  "escaneado": false,
+  "linhas": [
+    {
+      "pagina": 1,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 1,
+      "texto": "Fisiologia Cardiovascular: Fundamentos",
+      "fonteTamanho": 20,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Introdução ao Sistema Cardiovascular",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Componentes e funções",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "O sistema cardiovascular é formado pelo coração, pelos vasos sanguíneos e pelo sangue, e tem",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "como funções principais transportar oxigênio e nutrientes aos tecidos, remover o gás carbônico e",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "os produtos do metabolismo, distribuir hormônios e participar da regulação da temperatura",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "corporal. O coração funciona como uma bomba muscular que gera o gradiente de pressão",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "necessário para manter o fluxo contínuo de sangue.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Os vasos são classificados em artérias, arteríolas, capilares, vênulas e veias. As arteríolas são os",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "principais vasos de resistência, enquanto as veias, por sua grande complacência, armazenam",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "cerca de 60% do volume sanguíneo total e são chamadas de vasos de capacitância.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Circulação sistêmica e pulmonar",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "O coração direito recebe o sangue venoso das veias cavas e o bombeia para os pulmões pela",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "artéria pulmonar, onde ocorre a hematose. O coração esquerdo recebe o sangue oxigenado das",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "veias pulmonares e o ejeta pela aorta para a circulação sistêmica. As duas circulações estão",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "dispostas em série, de modo que o débito do ventrículo direito e o do esquerdo precisam ser",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "iguais em condições estacionárias.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "A circulação pulmonar é um sistema de baixa pressão e baixa resistência: a pressão média da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "artéria pulmonar é de aproximadamente 15 mmHg, contra cerca de 93 mmHg da pressão arterial",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "média sistêmica.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Página 1 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 1,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 2,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 2,
+      "texto": "Ciclo Cardíaco",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Sístole e diástole",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "O ciclo cardíaco compreende o conjunto de eventos mecânicos e elétricos que ocorrem entre o",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "início de um batimento e o início do seguinte. Com frequência cardíaca de 75 bpm, cada ciclo dura",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "cerca de 0,8 segundo, sendo a sístole ventricular responsável por aproximadamente 0,3 segundo",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "e a diástole por 0,5 segundo. Quando a frequência aumenta, a diástole encurta proporcionalmente",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "mais que a sístole.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Fases do ciclo",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "O ciclo pode ser dividido em contração isovolumétrica, ejeção rápida e lenta, relaxamento",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "isovolumétrico, enchimento rápido, diástase e sístole atrial. Durante a contração isovolumétrica",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "todas as valvas estão fechadas e a pressão ventricular sobe sem variação de volume, até superar",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "a pressão aórtica e abrir a valva aórtica.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "O volume diastólico final do ventrículo esquerdo é de cerca de 120 mL e o volume sistólico final de",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "cerca de 50 mL. A diferença entre os dois, de aproximadamente 70 mL, é o volume sistólico, e a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "razão entre o volume sistólico e o diastólico final é a fração de ejeção, normalmente superior a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "55%.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Bulhas cardíacas",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "A primeira bulha (B1) corresponde ao fechamento das valvas mitral e tricúspide no início da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "sístole. A segunda bulha (B2) resulta do fechamento das valvas aórtica e pulmonar no início da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "diástole. A terceira bulha, quando audível em adultos, sugere sobrecarga de volume e disfunção",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "ventricular, enquanto a quarta bulha está associada à contração atrial contra um ventrículo pouco",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "complacente.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Página 2 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 2,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 3,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 3,
+      "texto": "Eletrofisiologia Cardíaca",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Potencial de ação do miócito",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "O potencial de ação do miócito ventricular tem cinco fases. A fase 0 é a despolarização rápida,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "causada pela entrada de sódio. A fase 1 é uma repolarização inicial breve. A fase 2, o platô,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "depende da entrada de cálcio pelos canais do tipo L e é responsável pela longa duração do",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "potencial, que impede o tétano cardíaco. A fase 3 é a repolarização pela saída de potássio, e a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "fase 4 corresponde ao potencial de repouso, de cerca de -90 mV.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Sistema de condução",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "O nó sinoatrial é o marca-passo natural do coração, com automatismo próprio e frequência de 60 a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "100 disparos por minuto. O impulso atravessa as vias internodais, chega ao nó atrioventricular,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "onde sofre um retardo de cerca de 0,1 segundo que permite o enchimento ventricular, e segue",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "pelo feixe de His, pelos ramos direito e esquerdo e pelas fibras de Purkinje. Na falha do nó",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "sinoatrial, o nó atrioventricular assume com 40 a 60 bpm, e as fibras de Purkinje com 20 a 40 bpm.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "O eletrocardiograma registra a atividade elétrica global: a onda P representa a despolarização",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "atrial, o complexo QRS a despolarização ventricular e a onda T a repolarização ventricular. O",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "intervalo PR normal vai de 0,12 a 0,20 segundo e reflete o retardo no nó atrioventricular.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Página 3 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 3,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 4,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 4,
+      "texto": "Débito Cardíaco",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Determinantes",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "O débito cardíaco é o volume de sangue ejetado por minuto por cada ventrículo e é o produto da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "frequência cardíaca pelo volume sistólico. Em um adulto em repouso, com 70 bpm e 70 mL por",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "batimento, o débito é de aproximadamente 5 L/min. O volume sistólico depende da pré-carga, da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "pós-carga e da contratilidade, enquanto a frequência cardíaca é modulada pelo sistema nervoso",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "autônomo.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Durante o exercício intenso, o débito cardíaco de um indivíduo treinado pode chegar a 25 L/min ou",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "mais, graças ao aumento simultâneo da frequência cardíaca e do volume sistólico.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Lei de Frank-Starling",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "A lei de Frank-Starling afirma que, dentro de limites fisiológicos, quanto maior o enchimento",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "diastólico do coração, maior a força de contração e o volume sistólico ejetado. O mecanismo está",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "ligado à sobreposição ótima entre os filamentos de actina e miosina e à maior sensibilidade ao",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "cálcio. Esse mecanismo intrínseco garante que o ventrículo esquerdo ejete todo o sangue que",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "recebe do retorno venoso, equilibrando os débitos dos dois lados do coração.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Na insuficiência cardíaca, a curva de Frank-Starling se desloca para baixo e para a direita: para",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "um mesmo enchimento, o volume sistólico é menor, e o aumento compensatório da pré-carga",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "acaba por causar congestão pulmonar ou sistêmica.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Página 4 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 4,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 5,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 5,
+      "texto": "Regulação da Pressão Arterial",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "Controle neural de curto prazo",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "A pressão arterial é o produto do débito cardíaco pela resistência vascular periférica. O controle de",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "curto prazo é feito pelo reflexo barorreceptor: receptores de estiramento no seio carotídeo e no",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "arco aórtico enviam sinais pelos nervos glossofaríngeo e vago ao núcleo do trato solitário, no",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "bulbo. Uma queda da pressão reduz a descarga dos barorreceptores, o que aumenta a atividade",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "simpática, diminui a parassimpática e eleva a frequência cardíaca e a resistência periférica.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "Sistema renina-angiotensina-aldosterona",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "No controle de médio e longo prazo, a queda da pressão de perfusão renal estimula as células",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "justaglomerulares a liberarem renina. A renina converte o angiotensinogênio, de origem hepática,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "em angiotensina I, que a enzima conversora de angiotensina (ECA) transforma em angiotensina II.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "A angiotensina II é um potente vasoconstritor, estimula a liberação de aldosterona pelo córtex da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "suprarrenal e a sede, e aumenta a reabsorção de sódio e água.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "A aldosterona age no túbulo distal e no ducto coletor, promovendo reabsorção de sódio e excreção",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "de potássio. Os inibidores da ECA e os bloqueadores do receptor de angiotensina são usados no",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "tratamento da hipertensão e da insuficiência cardíaca por interromperem esse eixo.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "Página 5 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 5,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 6,
+      "texto": "Faculdade de Medicina — Fisiologia II — Prof. Silva",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 6,
+      "texto": "Circulação Coronariana",
+      "fonteTamanho": 16,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "Fluxo coronariano",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "As artérias coronárias direita e esquerda originam-se na raiz da aorta, logo acima da valva aórtica.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "O fluxo para o ventrículo esquerdo ocorre predominantemente na diástole, porque durante a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "sístole a contração do miocárdio comprime os vasos intramurais. Em repouso, o fluxo coronariano",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "é de cerca de 250 mL/min, ou 5% do débito cardíaco.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "O miocárdio extrai cerca de 70% do oxigênio do sangue coronariano em repouso, de modo que o",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "aumento da demanda de oxigênio só pode ser atendido por aumento do fluxo, mediado",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "principalmente por vasodilatação metabólica, com participação da adenosina e do óxido nítrico.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "Isquemia miocárdica",
+      "fonteTamanho": 13,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "A isquemia ocorre quando a oferta de oxigênio não atende à demanda do miocárdio, geralmente",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "por obstrução aterosclerótica de uma artéria coronária. Se a isquemia é transitória, manifesta-se",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "como angina; se é prolongada, leva à necrose das células miocárdicas, caracterizando o infarto",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "agudo do miocárdio. A elevação de troponina no sangue é o marcador de necrose mais sensível e",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "específico.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 6,
+      "texto": "Página 6 de 6",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 6,
+      "texto": "Material exclusivo CURSINHO APROVA — uso pessoal",
+      "fonteTamanho": 8,
+      "negrito": false,
+      "ruido": true
+    }
+  ],
+  "ruido": [
+    "faculdade de medicina — fisiologia ii — prof. silva",
+    "pagina de",
+    "material exclusivo cursinho aprova — uso pessoal"
+  ],
+  "titulos": [
+    {
+      "texto": "Fisiologia Cardiovascular: Fundamentos",
+      "nivel": 1
+    },
+    {
+      "texto": "Introdução ao Sistema Cardiovascular",
+      "nivel": 2
+    },
+    {
+      "texto": "Componentes e funções",
+      "nivel": 3
+    },
+    {
+      "texto": "Circulação sistêmica e pulmonar",
+      "nivel": 3
+    },
+    {
+      "texto": "Ciclo Cardíaco",
+      "nivel": 2
+    },
+    {
+      "texto": "Sístole e diástole",
+      "nivel": 3
+    },
+    {
+      "texto": "Fases do ciclo",
+      "nivel": 3
+    },
+    {
+      "texto": "Bulhas cardíacas",
+      "nivel": 3
+    },
+    {
+      "texto": "Eletrofisiologia Cardíaca",
+      "nivel": 2
+    },
+    {
+      "texto": "Potencial de ação do miócito",
+      "nivel": 3
+    },
+    {
+      "texto": "Sistema de condução",
+      "nivel": 3
+    },
+    {
+      "texto": "Débito Cardíaco",
+      "nivel": 2
+    },
+    {
+      "texto": "Determinantes",
+      "nivel": 3
+    },
+    {
+      "texto": "Lei de Frank-Starling",
+      "nivel": 3
+    },
+    {
+      "texto": "Regulação da Pressão Arterial",
+      "nivel": 2
+    },
+    {
+      "texto": "Controle neural de curto prazo",
+      "nivel": 3
+    },
+    {
+      "texto": "Sistema renina-angiotensina-aldosterona",
+      "nivel": 3
+    },
+    {
+      "texto": "Circulação Coronariana",
+      "nivel": 2
+    },
+    {
+      "texto": "Fluxo coronariano",
+      "nivel": 3
+    },
+    {
+      "texto": "Isquemia miocárdica",
+      "nivel": 3
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "paginas": 5,
+  "escaneado": false,
+  "linhas": [
+    {
+      "pagina": 1,
+      "texto": "Anatomia do Coração",
+      "fonteTamanho": 28,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "• Quatro câmaras: dois átrios e dois ventrículos",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "• Valvas atrioventriculares: mitral e tricúspide",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "• Valvas semilunares: aórtica e pulmonar",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "• Parede ventricular esquerda mais espessa que a direita",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "• Pericárdio fibroso e seroso envolve o coração",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Ciclo Cardíaco",
+      "fonteTamanho": 28,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "• Duração de 0,8 s com 75 bpm",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "• Sístole ventricular: contração isovolumétrica e ejeção",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "• Diástole: relaxamento isovolumétrico e enchimento",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "• B1: fechamento das valvas mitral e tricúspide",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "• B2: fechamento das valvas aórtica e pulmonar",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Débito Cardíaco",
+      "fonteTamanho": 28,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "• DC = frequência cardíaca × volume sistólico",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "• Repouso: cerca de 5 L/min",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "• Pré-carga, pós-carga e contratilidade",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "• Lei de Frank-Starling",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Eletrocardiograma Normal",
+      "fonteTamanho": 28,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "• Onda P: despolarização atrial",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "• Complexo QRS: despolarização ventricular",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "• Onda T: repolarização ventricular",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "• Intervalo PR de 0,12 a 0,20 s",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "• Frequência: 1500 dividido pelos quadradinhos entre dois R",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "Regulação da Pressão Arterial",
+      "fonteTamanho": 28,
+      "negrito": true,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "• PA = débito cardíaco × resistência periférica",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "• Reflexo barorreceptor: ação rápida",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "• Sistema renina-angiotensina-aldosterona: ação lenta",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 5,
+      "texto": "• Hormônio antidiurético e peptídeo natriurético atrial",
+      "fonteTamanho": 18,
+      "negrito": false,
+      "ruido": false
+    }
+  ],
+  "ruido": [],
+  "titulos": [
+    {
+      "texto": "Anatomia do Coração",
+      "nivel": 1
+    },
+    {
+      "texto": "Ciclo Cardíaco",
+      "nivel": 1
+    },
+    {
+      "texto": "Débito Cardíaco",
+      "nivel": 1
+    },
+    {
+      "texto": "Eletrocardiograma Normal",
+      "nivel": 1
+    },
+    {
+      "texto": "Regulação da Pressão Arterial",
+      "nivel": 1
+    }
+  ]
+}

@@ -1,0 +1,816 @@
+{
+  "paginas": 4,
+  "escaneado": false,
+  "linhas": [
+    {
+      "pagina": 1,
+      "texto": "Código Tributário Fictício — Texto compilado",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 1,
+      "texto": "TÍTULO I – DAS DISPOSIÇÕES GERAIS",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 1º Este Código institui o sistema tributário do Município de Vila Nova e estabelece normas",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "gerais de direito tributário aplicáveis às relações entre o fisco e os contribuintes.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Parágrafo único. Aplicam-se subsidiariamente as normas gerais editadas pela União.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 2º Os tributos de competência do Município são:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "I – impostos;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "II – taxas, em razão do exercício do poder de polícia ou pela utilização de serviços",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "públicos específicos e divisíveis;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "III – contribuição de melhoria, decorrente de obras públicas.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 3º Tributo é toda prestação pecuniária compulsória, em moeda ou cujo valor nela se possa",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "exprimir, que não constitua sanção de ato ilícito, instituída em lei e cobrada mediante atividade",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "administrativa plenamente vinculada.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 4º A natureza jurídica específica do tributo é determinada pelo fato gerador da respectiva",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "obrigação, sendo irrelevantes:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "I – a denominação e demais características formais adotadas pela lei;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "II – a destinação legal do produto da sua arrecadação.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "TÍTULO II – DO IMPOSTO PREDIAL E TERRITORIAL URBANO",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 5º O imposto sobre a propriedade predial e territorial urbana tem como fato gerador a",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "propriedade, o domínio útil ou a posse de bem imóvel localizado na zona urbana do Município.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "§ 1º Considera-se zona urbana a definida em lei municipal, observado o requisito mínimo da",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "existência de melhoramentos construídos ou mantidos pelo Poder Público, em pelo menos dois",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "dos seguintes incisos:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "I – meio-fio ou calçamento, com canalização de águas pluviais;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "II – abastecimento de água;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "III – sistema de esgotos sanitários;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "IV – rede de iluminação pública, com ou sem posteamento para distribuição domiciliar;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "V – escola primária ou posto de saúde a uma distância máxima de três quilômetros do",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "imóvel considerado.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "§ 2º A lei municipal pode considerar urbanas as áreas urbanizáveis ou de expansão urbana,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "constantes de loteamentos aprovados pelos órgãos competentes.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Art. 6º A base de cálculo do imposto é o valor venal do imóvel, apurado conforme planta",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "genérica de valores atualizada a cada quatro anos.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "§ 1º Na determinação da base de cálculo não se considera o valor dos bens móveis mantidos,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "em caráter permanente ou temporário, no imóvel, para efeito de sua utilização, exploração,",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "aformoseamento ou comodidade.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 1,
+      "texto": "Página 1",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 2,
+      "texto": "Código Tributário Fictício — Texto compilado",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 2,
+      "texto": "§ 2º As alíquotas são de:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "I – 0,8% (oito décimos por cento) para imóveis residenciais edificados;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "II – 1,5% (um e meio por cento) para imóveis não residenciais;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "III – 3% (três por cento) para terrenos não edificados.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 7º O contribuinte do imposto é o proprietário do imóvel, o titular do seu domínio útil ou o",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "seu possuidor a qualquer título.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 8º O imposto será lançado anualmente, em nome do sujeito passivo, podendo ser pago à",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "vista, com desconto de 10% (dez por cento), ou em até dez parcelas mensais e sucessivas.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "TÍTULO III – DO IMPOSTO SOBRE SERVIÇOS",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 9º O imposto sobre serviços de qualquer natureza tem como fato gerador a prestação de",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "serviços constantes da lista anexa a este Código, ainda que não se constituam como atividade",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "preponderante do prestador.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "§ 1º O imposto não incide sobre:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "I – as exportações de serviços para o exterior do País;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "II – a prestação de serviços em relação de emprego, dos trabalhadores avulsos, dos",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "diretores e membros de conselho consultivo ou de conselho fiscal de sociedades e",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "fundações;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "III – o valor intermediado no mercado de títulos e valores mobiliários.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "§ 2º O serviço considera-se prestado, e o imposto devido, no local do estabelecimento",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "prestador.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 10. A base de cálculo do imposto é o preço do serviço.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "§ 1º Quando os serviços descritos forem prestados por sociedades uniprofissionais, o imposto",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "será calculado por meio de valor fixo anual, em função do número de profissionais habilitados.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "§ 2º A alíquota máxima do imposto é de 5% (cinco por cento) e a mínima de 2% (dois por",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "cento).",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 11. São responsáveis pelo imposto, na qualidade de substitutos tributários, os tomadores",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "de serviços prestados por pessoas jurídicas não estabelecidas no Município.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "TÍTULO IV – DAS TAXAS",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 12. A taxa de licença de funcionamento tem como fato gerador o exercício regular do poder",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "de polícia municipal sobre a localização, a instalação e o funcionamento de estabelecimentos.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Art. 13. A taxa de coleta de lixo tem como fato gerador a utilização, efetiva ou potencial, do",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "serviço público específico e divisível de coleta, remoção e destinação de resíduos sólidos",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "domiciliares.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Parágrafo único. É vedada a adoção de base de cálculo própria de imposto na instituição de",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "taxas.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 2,
+      "texto": "Página 2",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 3,
+      "texto": "Código Tributário Fictício — Texto compilado",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 14. Não se sujeitam ao pagamento de taxas:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "I – os templos de qualquer culto;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "II – as entidades beneficentes de assistência social que atendam aos requisitos legais;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "III – as pessoas naturais com renda familiar inferior a dois salários mínimos, mediante",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "requerimento.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "TÍTULO V – DO CRÉDITO TRIBUTÁRIO",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 15. O crédito tributário decorre da obrigação principal e tem a mesma natureza desta.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 16. O lançamento é o procedimento administrativo tendente a verificar a ocorrência do fato",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "gerador, determinar a matéria tributável, calcular o montante do tributo devido, identificar o",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "sujeito passivo e, sendo caso, propor a aplicação da penalidade cabível.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Parágrafo único. A atividade administrativa de lançamento é vinculada e obrigatória, sob pena",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "de responsabilidade funcional.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 17. Suspendem a exigibilidade do crédito tributário:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "I – a moratória;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "II – o depósito do seu montante integral;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "III – as reclamações e os recursos administrativos;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "IV – a concessão de medida liminar em mandado de segurança.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 18. Extinguem o crédito tributário:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "I – o pagamento;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "II – a compensação;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "III – a transação;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "IV – a remissão;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "V – a prescrição e a decadência;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "VI – a conversão de depósito em renda.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 19. O direito de a Fazenda Pública constituir o crédito tributário extingue-se após cinco",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "anos, contados:",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "I – do primeiro dia do exercício seguinte àquele em que o lançamento poderia ter sido",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "efetuado;",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "II – da data em que se tornar definitiva a decisão que houver anulado, por vício formal, o",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "lançamento anteriormente efetuado.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 20. A ação para a cobrança do crédito tributário prescreve em cinco anos, contados da data",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "da sua constituição definitiva.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 21. O contribuinte em débito poderá requerer parcelamento em até sessenta parcelas",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "mensais, acrescidas de juros e correção monetária, vedado o parcelamento de valores",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "inferiores a R$ 100,00.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Art. 22. Esta Lei entra em vigor na data de sua publicação, revogadas as disposições em",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 3,
+      "texto": "Página 3",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 4,
+      "texto": "Código Tributário Fictício — Texto compilado",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    },
+    {
+      "pagina": 4,
+      "texto": "contrário.",
+      "fonteTamanho": 11,
+      "negrito": false,
+      "ruido": false
+    },
+    {
+      "pagina": 4,
+      "texto": "Página 4",
+      "fonteTamanho": 9,
+      "negrito": false,
+      "ruido": true
+    }
+  ],
+  "ruido": [
+    "codigo tributario ficticio — texto compilado",
+    "pagina"
+  ],
+  "titulos": []
+}
