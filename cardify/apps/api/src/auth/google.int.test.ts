@@ -39,14 +39,15 @@ describe('login com Google', () => {
     expect(res.cookies.find((c) => c.name === COOKIE_OAUTH_STATE)?.value.startsWith(`${inicio.state}.`)).toBe(true);
   });
 
-  it('sem GOOGLE_CLIENT_ID responde 503 google_indisponivel', async () => {
+  it('sem GOOGLE_CLIENT_ID volta para o login com erro=google_indisponivel', async () => {
     const sem = await criarAppAuth({ google: false });
     try {
       const res = await sem.t.app.inject({ method: 'GET', url: '/v1/auth/google' });
-      expect(res.statusCode).toBe(503);
-      expect(res.json()).toEqual({ erro: 'google_indisponivel' });
+      expect(res.statusCode).toBe(302);
+      expect(res.headers.location).toMatch(/\/entrar\?erro=google_indisponivel$/);
       const cb = await sem.t.app.inject({ method: 'GET', url: '/v1/auth/google/callback?code=x&state=y' });
-      expect(cb.statusCode).toBe(503);
+      expect(cb.statusCode).toBe(302);
+      expect(cb.headers.location).toMatch(/\/entrar\?erro=google_indisponivel$/);
     } finally {
       await sem.t.fechar();
     }

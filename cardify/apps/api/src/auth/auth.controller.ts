@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Inject, Post, Query, Req, Res, ServiceUnavailableException } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Inject, Post, Query, Req, Res } from '@nestjs/common';
 import { type Db, eq, users } from '@cardify/db';
 import { type Env } from '@cardify/shared';
 import type { FastifyReply, FastifyRequest } from 'fastify';
@@ -58,7 +58,8 @@ export class AuthController {
   @Publica()
   @Get('auth/google')
   async iniciarGoogle(@Query('retorno') retorno: unknown, @Res() res: FastifyReply): Promise<void> {
-    const google = this.exigirGoogle();
+    const google = this.google;
+    if (!google) return this.googleIndisponivel(res);
     const { url, state, codeVerifier } = await google.iniciar();
     const opcoes = opcoesCookie(this.env, OAUTH_TTL_SEGUNDOS, true);
     void res.setCookie(COOKIE_OAUTH_STATE, state, opcoes);
@@ -75,7 +76,8 @@ export class AuthController {
     @Req() req: FastifyRequest,
     @Res() res: FastifyReply,
   ): Promise<void> {
-    const google = this.exigirGoogle();
+    const google = this.google;
+    if (!google) return this.googleIndisponivel(res);
     const stateCookie = lerCookieAssinado(req, COOKIE_OAUTH_STATE);
     const verifier = lerCookieAssinado(req, COOKIE_OAUTH_VERIFIER);
     const retorno = lerCookieAssinado(req, COOKIE_OAUTH_RETORNO);
@@ -130,8 +132,8 @@ export class AuthController {
     await this.sessoes.encerrar(req, res);
   }
 
-  private exigirGoogle(): ClienteGoogle {
-    if (!this.google) throw new ServiceUnavailableException({ erro: 'google_indisponivel' });
-    return this.google;
+  /** As rotas do Google são navegações de página: sem Google configurado, volta para o login com o motivo. */
+  private googleIndisponivel(res: FastifyReply): void {
+    void res.redirect(`${this.env.APP_URL}/entrar?erro=google_indisponivel`, 302);
   }
 }
