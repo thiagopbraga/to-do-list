@@ -23,7 +23,7 @@ export async function criarApp(): Promise<NestFastifyApplication> {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ trustProxy: carregarEnv().TRUST_PROXY }),
-    { rawBody: true },
+    { rawBody: true, bufferLogs: true },
   );
   return configurarApp(app);
 }

@@ -5,11 +5,13 @@ import { PgBossFilaService, PgProgressoPublisher } from '@cardify/queue';
 import { carregarEnv, type Env } from '@cardify/shared';
 import { S3StorageService } from '@cardify/storage';
 import { ConsumidorService } from './consumidor.service';
+import { ObservabilidadeModule } from './observabilidade/observabilidade.module';
 import { PipelineService } from './pipeline.service';
 import { DB, ENV, FILA, LLM_PROVIDER, POOL, PUBLICADOR, STORAGE } from './tokens';
 
 /** Testes substituem cada token com `overrideProvider(TOKEN).useValue(...)`. */
 @Module({
+  imports: [ObservabilidadeModule],
   providers: [
     { provide: ENV, useFactory: () => carregarEnv() },
     { provide: POOL, inject: [ENV], useFactory: (env: Env) => criarDb(env.DATABASE_URL) },

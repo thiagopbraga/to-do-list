@@ -163,6 +163,38 @@ describe('carregarEnv: regras condicionais (superRefine)', () => {
   });
 });
 
+describe('variáveis de observabilidade (opcionais)', () => {
+  it('ausentes: sem ADMIN_TOKEN, sem OTEL e com teto de gasto diário de 5000 centavos', () => {
+    const env = carregarEnv({});
+
+    expect(env.ADMIN_TOKEN).toBeUndefined();
+    expect(env.OTEL_EXPORTER_OTLP_ENDPOINT).toBeUndefined();
+    expect(env.ALERTA_GASTO_DIARIO_CENTAVOS).toBe(5000);
+  });
+
+  it('ADMIN_TOKEN, quando presente, precisa de pelo menos 32 caracteres', () => {
+    expect(() => carregarEnv({ ADMIN_TOKEN: 'a'.repeat(31) })).toThrow(/ADMIN_TOKEN/);
+    expect(carregarEnv({ ADMIN_TOKEN: SEGREDO_32 }).ADMIN_TOKEN).toBe(SEGREDO_32);
+  });
+
+  it('ADMIN_TOKEN vazio equivale a ausente (rota de métricas desligada)', () => {
+    expect(carregarEnv({ ADMIN_TOKEN: '' }).ADMIN_TOKEN).toBeUndefined();
+  });
+
+  it('OTEL_EXPORTER_OTLP_ENDPOINT precisa ser uma URL', () => {
+    expect(() => carregarEnv({ OTEL_EXPORTER_OTLP_ENDPOINT: 'otlp-local' })).toThrow(/OTEL_EXPORTER_OTLP_ENDPOINT/);
+    expect(carregarEnv({ OTEL_EXPORTER_OTLP_ENDPOINT: 'http://localhost:4318' }).OTEL_EXPORTER_OTLP_ENDPOINT).toBe(
+      'http://localhost:4318',
+    );
+  });
+
+  it('ALERTA_GASTO_DIARIO_CENTAVOS é inteiro não negativo', () => {
+    expect(carregarEnv({ ALERTA_GASTO_DIARIO_CENTAVOS: '120' }).ALERTA_GASTO_DIARIO_CENTAVOS).toBe(120);
+    expect(() => carregarEnv({ ALERTA_GASTO_DIARIO_CENTAVOS: '1.5' })).toThrow(/ALERTA_GASTO_DIARIO_CENTAVOS/);
+    expect(() => carregarEnv({ ALERTA_GASTO_DIARIO_CENTAVOS: '-1' })).toThrow(/ALERTA_GASTO_DIARIO_CENTAVOS/);
+  });
+});
+
 describe('providers fake em production', () => {
   it('recusa pagamento e LLM fake', () => {
     expect(() => carregarEnv({ NODE_ENV: 'production', SESSION_SECRET: 'x'.repeat(32), S3_ACCESS_KEY_ID: 'chave', S3_SECRET_ACCESS_KEY: 'segredo' })).toThrow(

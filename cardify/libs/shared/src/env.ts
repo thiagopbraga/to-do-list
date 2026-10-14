@@ -50,6 +50,12 @@ const EnvBase = z.object({
   /** true atrás de proxy reverso/PaaS: `request.ip` passa a vir de X-Forwarded-For (limite anônimo por IP). */
   TRUST_PROXY: booleano(false),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
+  /** Opcional. Ausente = `/v1/admin/metricas` responde 404. Com valor, precisa de 32+ caracteres. */
+  ADMIN_TOKEN: z.string().min(32).optional(),
+  /** Opcional. Ausente = OpenTelemetry desligado (API e worker). */
+  OTEL_EXPORTER_OTLP_ENDPOINT: z.string().url().optional(),
+  /** Teto de gasto diário com LLM (UTC) acima do qual o worker emite alerta, em centavos de real. */
+  ALERTA_GASTO_DIARIO_CENTAVOS: z.coerce.number().int().nonnegative().default(5000),
 });
 
 export const EnvSchema = EnvBase.superRefine((env, ctx) => {

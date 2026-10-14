@@ -5,11 +5,12 @@ import { CardsModule } from './cards/cards.module';
 import { HealthController } from './health/health.controller';
 import { InfraModule } from './infra/infra.module';
 import { JobsModule } from './jobs/jobs.module';
+import { ObservabilidadeModule } from './observabilidade/observabilidade.module';
 import { PagamentoModule } from './pagamento/pagamento.module';
 import { SessaoModule } from './sessao/sessao.module';
 
 @Module({
-  imports: [InfraModule, SessaoModule, AuthModule, AnonimoModule, JobsModule, CardsModule, PagamentoModule],
+  imports: [InfraModule, SessaoModule, AuthModule, AnonimoModule, JobsModule, CardsModule, PagamentoModule, ObservabilidadeModule],
   controllers: [HealthController],
 })
 export class AppModule {}
