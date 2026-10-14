@@ -8,3 +8,4 @@ export * from './llm/anthropic';
 export * from './llm/fake';
 export * from './llm/estruturado';
 export * from './llm/json-schema';
+export * from './llm/fabrica';
