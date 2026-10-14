@@ -1,1 +1,0 @@
-export const PAGAMENTO_PROVIDER = Symbol('PAGAMENTO_PROVIDER');

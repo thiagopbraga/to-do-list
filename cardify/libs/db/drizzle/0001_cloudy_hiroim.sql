@@ -1,1 +1,0 @@
-ALTER TABLE "jobs" ADD COLUMN "tentativas" integer DEFAULT 0 NOT NULL;
