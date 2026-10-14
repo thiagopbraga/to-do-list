@@ -3,10 +3,14 @@
 Ferramentas Python (só de desenvolvimento/CI, não são dependência de runtime) baseadas na biblioteca oficial `anki`.
 
 ```
-bash tools/anki/preparar.sh   # cria tools/anki/.venv (python3.11, ou python3) e instala requirements.txt (anki==25.2)
+bash tools/anki/preparar.sh                    # cria tools/anki/.venv (python3.11, ou python3) e instala requirements.txt (anki==25.2)
+ANKI_VERSAO=latest bash tools/anki/preparar.sh # instala a versão mais recente do PyPI (pip install --upgrade anki)
+ANKI_VERSAO=25.9 bash tools/anki/preparar.sh   # instala uma versão exata
 ```
 
-`preparar.sh` é idempotente: se o venv já tem a biblioteca `anki`, só confirma a versão. A CI roda-o antes de `npm run test:apkg`.
+`ANKI_VERSAO` vazio (padrão) usa a versão fixada em `requirements.txt`. Ao final, o script imprime a versão instalada (`anki X.Y`).
+
+`preparar.sh` é idempotente: rodar de novo só mexe no venv se a versão pedida difere da instalada. Trocar de `latest` para a versão fixada (ou o contrário) reinstala. A CI roda-o antes de `npm run test:apkg`; o workflow `cardify-anki-semanal.yml` roda com `ANKI_VERSAO=latest` toda segunda (06:17 UTC) e abre uma issue se a suíte falhar.
 
 ## gerar_semente.py
 
