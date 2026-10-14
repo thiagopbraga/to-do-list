@@ -1,0 +1,14 @@
+{
+  "files": [],
+  "references": [
+    { "path": "libs/shared" },
+    { "path": "libs/db" },
+    { "path": "libs/ingest" },
+    { "path": "libs/generation" },
+    { "path": "libs/apkg" },
+    { "path": "libs/queue" },
+    { "path": "libs/storage" },
+    { "path": "apps/api" },
+    { "path": "apps/worker" }
+  ]
+}

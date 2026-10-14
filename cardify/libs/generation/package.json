@@ -1,0 +1,11 @@
+{
+  "name": "@cardify/generation",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "@cardify/shared": "*"
+  }
+}

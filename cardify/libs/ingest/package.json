@@ -1,0 +1,13 @@
+{
+  "name": "@cardify/ingest",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "@cardify/shared": "*",
+    "file-type": "^21.3.4",
+    "js-tiktoken": "^1.0.21",
+    "pdfjs-dist": "4.10"
+  }
+}

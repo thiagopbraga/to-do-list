@@ -30,7 +30,7 @@ const config: VitestUserConfig = {
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
-    exclude: ['**/node_modules/**', '**/dist/**', 'e2e/**'],
+    exclude: ['**/node_modules/**', '**/dist/**', 'e2e/**', 'cardify/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
