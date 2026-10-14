@@ -1,4 +1,4 @@
-import { type Db, cards, eq } from '@cardify/db';
+import { type Db, cards, eq, llmCalls } from '@cardify/db';
 import { criarAppTeste, type AppTeste } from '../testing/app-teste';
 import { REGENERADOR, type RegeneradorCards } from './regenerador';
 import { criarCard, criarJob, criarSessaoAnonima, criarUsuario } from './testing/semear';
@@ -420,11 +420,26 @@ describe('PUT /v1/jobs/:id/cards/ordem', () => {
 });
 
 describe('POST /v1/cards/:id/regenerate', () => {
-  it('sem regenerador configurado responde 503', async () => {
-    const card = await criarCard(db, jobId);
-    const res = await t.app.inject({ method: 'POST', url: `/v1/cards/${card.id}/regenerate`, headers: logado() });
-    expect(res.statusCode).toBe(503);
-    expect(res.json()).toEqual({ erro: 'regeneracao_indisponivel' });
+  it('regenera pelo LLM configurado (fake em teste) e registra o custo no ledger', async () => {
+    const antigo = await criarCard(db, jobId, {
+      frente: 'Qual é o marca-passo fisiológico do coração?',
+      verso: 'O nó sinoatrial, localizado no átrio direito.',
+    });
+    const res = await t.app.inject({ method: 'POST', url: `/v1/cards/${antigo.id}/regenerate`, headers: logado() });
+    expect(res.statusCode).toBe(201);
+    expect(res.json().id).not.toBe(antigo.id);
+    expect((await linhaDoCard(antigo.id)).estado).toBe('descartado');
+    const chamadas = await db.select().from(llmCalls).where(eq(llmCalls.jobId, jobId));
+    expect(chamadas.map((c) => c.estagio)).toContain('regeneracao');
+  });
+
+  it('job anônimo não regenera (exige login)', async () => {
+    const anon = await criarSessaoAnonima(db);
+    const { jobId: jobAnonimo } = await criarJob(db, { anonSessionId: anon });
+    const card = await criarCard(db, jobAnonimo);
+    const res = await t.app.inject({ method: 'POST', url: `/v1/cards/${card.id}/regenerate`, headers: { 'x-teste-anon': anon } });
+    expect(res.statusCode).toBe(403);
+    expect(res.json()).toMatchObject({ erro: 'login_necessario' });
     expect((await linhaDoCard(card.id)).estado).toBe('gerado');
   });
 
