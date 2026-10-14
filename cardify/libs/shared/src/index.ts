@@ -7,3 +7,4 @@ export * from './schemas/card';
 export * from './schemas/job';
 export * from './schemas/plano';
 export type * from './contracts';
+export * from './estimativa';
