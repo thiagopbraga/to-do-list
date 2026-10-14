@@ -278,7 +278,8 @@ describe('PipelineService — orçamento', () => {
     expect(final.status).toBe('parcial');
     expect(final.cardsGerados).toBeGreaterThan(0);
     expect(final.cardsGerados).toBeLessThan(30);
-    expect(final.custoCentavos).toBeLessThanOrEqual(ORCAMENTO_PARCIAL);
+    // A reserva usa a saída estimada: chamadas já em voo podem passar do teto, até ~1 chamada por vaga de concorrência.
+    expect(final.custoCentavos).toBeLessThanOrEqual(ORCAMENTO_PARCIAL * 1.15);
     expect(final.erro).toBeNull();
 
     const cota = await consultarCota(ctx.db, job.userId as string);

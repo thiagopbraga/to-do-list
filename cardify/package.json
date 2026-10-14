@@ -22,7 +22,8 @@
     "dev:api": "npm run -w @cardify/api dev",
     "dev:worker": "npm run -w @cardify/worker dev",
     "dev:web": "npm run -w @cardify/web dev",
-    "test:apkg": "vitest run --project int libs/apkg tools"
+    "test:apkg": "vitest run --project int libs/apkg tools",
+    "test:e2e": "playwright test -c e2e/playwright.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
