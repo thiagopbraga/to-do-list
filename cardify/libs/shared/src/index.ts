@@ -1,4 +1,5 @@
 export * from './constants';
+export * from './env';
 export * from './errors';
 export * from './util';
 export * from './nao-implementado';

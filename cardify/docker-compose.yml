@@ -1,0 +1,61 @@
+# Infra local de desenvolvimento: Postgres 16 e MinIO (S3 compatível).
+# Portas do host ajustáveis por variável (ver .env.example). Ex.: POSTGRES_PORT=5433 docker compose up -d
+name: cardify
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cardify
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/postgres-init.sql:/docker-entrypoint-initdb.d/01-bancos.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cardify"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  minio:
+    # Não usar 2025.7.x: essa build não sobe o Console web na porta 9001 (testado).
+    image: bitnamilegacy/minio:2025.4.22-debian-12-r2
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "${MINIO_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - minio-data:/bitnami/minio/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  minio-init:
+    image: bitnamilegacy/minio-client:2025.7.21-debian-12-r3
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      MC_CONFIG_DIR: /tmp/.mc
+    entrypoint: ["/bin/sh", "-c"]
+    # Bucket privado: sem acesso anônimo. Acesso só por credenciais ou URL assinada.
+    command:
+      - |
+        for i in $$(seq 1 30); do mc alias set local http://minio:9000 minioadmin minioadmin >/dev/null 2>&1 && break; sleep 2; done
+        mc mb --ignore-existing local/cardify &&
+        mc anonymous set none local/cardify &&
+        echo "bucket cardify pronto"
+    restart: "no"
+
+volumes:
+  postgres-data:
+  minio-data:
