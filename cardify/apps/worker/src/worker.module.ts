@@ -7,6 +7,7 @@ import { S3StorageService } from '@cardify/storage';
 import { ConsumidorService } from './consumidor.service';
 import { ObservabilidadeModule } from './observabilidade/observabilidade.module';
 import { PipelineService } from './pipeline.service';
+import { RetencaoService } from './retencao/retencao.service';
 import { DB, ENV, FILA, LLM_PROVIDER, POOL, PUBLICADOR, STORAGE } from './tokens';
 
 /** Testes substituem cada token com `overrideProvider(TOKEN).useValue(...)`. */
@@ -34,6 +35,7 @@ import { DB, ENV, FILA, LLM_PROVIDER, POOL, PUBLICADOR, STORAGE } from './tokens
     { provide: LLM_PROVIDER, inject: [ENV], useFactory: (env: Env) => criarLlmProvider(env) },
     PipelineService,
     ConsumidorService,
+    RetencaoService,
   ],
 })
 export class WorkerModule {}
